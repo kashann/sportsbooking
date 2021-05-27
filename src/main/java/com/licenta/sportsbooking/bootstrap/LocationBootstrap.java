@@ -38,31 +38,31 @@ public class LocationBootstrap implements ApplicationListener<ContextRefreshedEv
 
         //Get sports
         Optional<Sport> skiOptional = sportRepository.findById(1L);
-        if(!skiOptional.isPresent()) {
+        if (skiOptional.isEmpty()) {
             throw new RuntimeException("Expected Sport not found!");
         }
         Optional<Sport> paraglidingOptional = sportRepository.findByName(SportType.PARAGLIDING);
-        if(!paraglidingOptional.isPresent()) {
+        if (paraglidingOptional.isEmpty()) {
             throw new RuntimeException("Expected Sport not found!");
         }
         Optional<Sport> atvOptional = sportRepository.findByName(SportType.ATV);
-        if(!atvOptional.isPresent()) {
+        if (atvOptional.isEmpty()) {
             throw new RuntimeException("Expected Sport not found!");
         }
         Optional<Sport> downhillOptional = sportRepository.findByName(SportType.DOWNHILL);
-        if(!downhillOptional.isPresent()) {
+        if (downhillOptional.isEmpty()) {
             throw new RuntimeException("Expected Sport not found!");
         }
         Optional<Sport> snowboardingOptional = sportRepository.findById(5L);
-        if(!snowboardingOptional.isPresent()) {
+        if (snowboardingOptional.isEmpty()) {
             throw new RuntimeException("Expected Sport not found!");
         }
         Optional<Sport> auSkiOptional = sportRepository.findById(6L);
-        if(!auSkiOptional.isPresent()) {
+        if (auSkiOptional.isEmpty()) {
             throw new RuntimeException("Expected Sport not found!");
         }
         Optional<Sport> auSnowboardingOptional = sportRepository.findById(7L);
-        if(!auSnowboardingOptional.isPresent()) {
+        if (auSnowboardingOptional.isEmpty()) {
             throw new RuntimeException("Expected Sport not found!");
         }
 

@@ -3,6 +3,7 @@ package com.licenta.sportsbooking.model;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -10,6 +11,7 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(exclude = "location")
+@ToString(exclude = "location")
 @Entity
 public class Sport implements Comparable<Sport> {
 

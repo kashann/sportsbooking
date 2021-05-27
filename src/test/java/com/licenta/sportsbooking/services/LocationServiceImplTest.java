@@ -1,8 +1,8 @@
 package com.licenta.sportsbooking.services;
 
-import com.licenta.sportsbooking.commands.LocationCommand;
-import com.licenta.sportsbooking.converters.LocationCommandToLocation;
-import com.licenta.sportsbooking.converters.LocationToLocationCommand;
+import com.licenta.sportsbooking.dto.LocationDTO;
+import com.licenta.sportsbooking.converters.LocationDtoToLocationConverter;
+import com.licenta.sportsbooking.converters.LocationToLocationDtoConverter;
 import com.licenta.sportsbooking.exceptions.NotFoundException;
 import com.licenta.sportsbooking.mappers.LocationMapper;
 import com.licenta.sportsbooking.model.Location;
@@ -11,7 +11,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -20,53 +23,31 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 
+@SpringBootTest
 class LocationServiceImplTest {
 
+    @Autowired
     LocationServiceImpl service;
 
-    @Mock
-    LocationMapper locationMapper;
-
-    @Mock
-    LocationRepository repository;
-
-    @Mock
-    LocationCommandToLocation locationCommandToLocation;
-
-    @Mock
-    LocationToLocationCommand locationToLocationCommand;
-
-    @BeforeEach
-    void setUp() {
-        MockitoAnnotations.initMocks(this);
-        service = new LocationServiceImpl(locationMapper, repository, locationCommandToLocation, locationToLocationCommand);
-    }
+    @Autowired
+    LocationToLocationDtoConverter locationToLocationDtoConverter;
 
     @Test
     void findById() {
         Location location = new Location();
         location.setId(1L);
-        Optional<Location> locationOptional = Optional.of(location);
+        service.saveLocation(locationToLocationDtoConverter.convert(location));
 
-        when(repository.findById(anyLong())).thenReturn(Optional.ofNullable(location));
+        LocationDTO locationReturned = service.findById(1L);
 
-        LocationCommand locationReturned = service.findById(1L);
-
-        //todo fix. Manual testing working, mock failing
         assertNotNull(locationReturned, "Null location returned");
         assertEquals(1L, locationReturned.getId());
-        verify(repository, times(1)).findById(anyLong());
-        verify(repository, never()).findAll();
     }
 
     @Test
     void notFoundById() {
-        Optional<Location> locationOptional = Optional.empty();
-
-        when(repository.findById(anyLong())).thenReturn(locationOptional);
-
         assertThrows(NotFoundException.class, () -> {
-            Location locationReturned = locationCommandToLocation.convert(service.findById(1L));
+            service.findById(999L);
         });
     }
 
@@ -75,55 +56,40 @@ class LocationServiceImplTest {
         Location location = new Location();
         ArrayList<Location> locationsData = new ArrayList();
         locationsData.add(location);
+        LocationDTO initialLocationDto = locationToLocationDtoConverter.convert(location);
 
-        when(repository.findAll()).thenReturn(locationsData);
+        service.saveLocation(initialLocationDto);
 
-        List<LocationCommand> locations = service.getLocations();
+        List<LocationDTO> locations = service.getLocations();
 
-        assertEquals(locations.size(), 1);
-        verify(repository, times(1)).findAll();
-        verify(repository, never()).findById(anyLong());
+        boolean found = false;
+        for(LocationDTO locationDTO : locations) {
+            if (locationDTO.equals(initialLocationDto)) {
+                found = true;
+            }
+        }
+        assertTrue(found);
     }
 
     @Test
-    void saveLocationCommand() {
+    void saveLocation() {
         Location location = new Location();
         location.setId(1L);
-        Optional<Location> locationOptional = Optional.of(location);
+        service.saveLocation(locationToLocationDtoConverter.convert(location));
 
-        when(locationCommandToLocation.convert(any())).thenReturn(location);
-        when(repository.save(any())).thenReturn(location);
+        LocationDTO locationReturned = service.saveLocation(locationToLocationDtoConverter.convert(location));
 
-        LocationCommand locationReturned = service.saveLocationCommand(locationToLocationCommand.convert(location));
-
-        //todo fix. Manual testing working, mock failing
         assertNotNull(locationReturned, "Null location returned");
         assertEquals(1L, locationReturned.getId());
-        verify(repository, times(1)).save(any(Location.class));
-
-//        //given
-//        CustomerDTO customerDTO = new CustomerDTO();
-//        customerDTO.setFirstname("Jim");
-//
-//        Customer savedCustomer = new Customer();
-//        savedCustomer.setFirstname(customerDTO.getFirstname());
-//        savedCustomer.setLastname(customerDTO.getLastname());
-//        savedCustomer.setId(1l);
-//
-//        when(customerRepository.save(any(Customer.class))).thenReturn(savedCustomer);
-//
-//        //when
-//        CustomerDTO savedDto = customerService.saveCustomerByDTO(1L, customerDTO);
-//
-//        //then
-//        assertEquals(customerDTO.getFirstname(), savedDto.getFirstname());
-//        assertEquals("/api/v1/customers/1", savedDto.getCustomerUrl());
     }
 
     @Test
     void deleteById() {
         //given
-        Long idToDelete = 2L;
+        Long idToDelete = 3L;
+        Location location = new Location();
+        location.setId(idToDelete);
+        service.saveLocation(locationToLocationDtoConverter.convert(location));
 
         //when
         service.deleteById(idToDelete);
@@ -131,6 +97,8 @@ class LocationServiceImplTest {
         //no 'when' because method has void return type
 
         //then
-        verify(repository, times(1)).deleteById(anyLong());
+        assertThrows(NotFoundException.class, () -> {
+            service.findById(idToDelete);
+        });
     }
 }

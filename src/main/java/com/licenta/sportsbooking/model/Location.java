@@ -21,6 +21,6 @@ public class Location {
     @JoinColumn(name = "town_id")
     private Town town;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "location")
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "location")
     private Set<Sport> sports = new HashSet<>();
 }

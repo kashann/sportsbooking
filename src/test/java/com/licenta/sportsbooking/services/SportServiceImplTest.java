@@ -1,18 +1,21 @@
 package com.licenta.sportsbooking.services;
 
-import com.licenta.sportsbooking.commands.SportCommand;
-import com.licenta.sportsbooking.converters.LocationToLocationCommand;
-import com.licenta.sportsbooking.converters.SportCommandToSport;
-import com.licenta.sportsbooking.converters.SportToSportCommand;
+import com.licenta.sportsbooking.dto.SportDTO;
+import com.licenta.sportsbooking.converters.LocationToLocationDtoConverter;
+import com.licenta.sportsbooking.converters.SportDtoToSportConverter;
+import com.licenta.sportsbooking.converters.SportToSportDtoConverter;
 import com.licenta.sportsbooking.model.Location;
 import com.licenta.sportsbooking.model.Sport;
 import com.licenta.sportsbooking.model.SportType;
+import com.licenta.sportsbooking.repositories.LocationRepository;
 import com.licenta.sportsbooking.repositories.SportRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
 import java.util.*;
@@ -22,55 +25,44 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 
+@SpringBootTest
 class SportServiceImplTest {
 
-    SportServiceImpl service;
+    @Autowired
+    SportServiceImpl sportService;
 
-    @Mock
-    SportRepository repository;
+    @Autowired
+    LocationServiceImpl locationService;
 
-    @Mock
-    SportCommandToSport sportCommandToSport;
+    @Autowired
+    LocationRepository locationRepository;
 
-    @Mock
-    SportToSportCommand sportToSportCommand;
-
-    @Mock
-    LocationToLocationCommand locationToLocationCommand;
-
-    @BeforeEach
-    void setUp() {
-        MockitoAnnotations.initMocks(this);
-        service = new SportServiceImpl(repository, sportCommandToSport, sportToSportCommand);
-    }
+    @Autowired
+    LocationToLocationDtoConverter locationToLocationDtoConverter;
 
     @Test
     void findSportsByLocationNameAndPeriodTest() {
+        SportType sportType = SportType.ATV;
         Location location = new Location();
-        location.setId(2L);
         Sport sport = new Sport();
-        sport.setId(1L);
-        sport.setName(SportType.ATV);
+        sport.setName(sportType);
+        sport.setStartDate(LocalDate.of(2021, 1, 1));
+        sport.setEndDate(LocalDate.of(2022, 1, 1));
         sport.setLocation(location);
-        sport.setStartDate(LocalDate.of(2020, 1, 1));
-        sport.setEndDate(LocalDate.of(2021, 1, 1));
-        List<Sport> sportList = new ArrayList<>();
-        sportList.add(sport);
+
+        locationService.saveLocation(locationToLocationDtoConverter.convert(location));
+
         List<SportType> sportTypes = new ArrayList<>();
-        sportTypes.add(SportType.ATV);
+        sportTypes.add(sportType);
 
-        when(repository.findByLocationId(anyLong())).thenReturn(sportList);
+        Set<SportDTO> sportsReturned = sportService
+                .findSportsByLocationNameAndPeriod(Objects.requireNonNull(locationToLocationDtoConverter.convert(location)), sportTypes,
+                LocalDate.of(2021, 6, 20), LocalDate.of(2021, 6, 24));
+        assertFalse(sportsReturned.isEmpty());
+        SportDTO sportReturned = sportsReturned.iterator().next();
 
-        Set<SportCommand> sportsReturned = service
-                .findSportsByLocationNameAndPeriod(locationToLocationCommand.convert(location), sportTypes,
-                LocalDate.of(2020, 6, 20), LocalDate.of(2020, 6, 24));
-        SportCommand sportReturned = sportsReturned.iterator().next();
-
-        //todo fix. Manual testing working, mock failing
         assertNotNull(sportReturned, "Null sport returned");
-        assertEquals(1L, sportReturned.getId());
-        verify(repository, times(1)).findById(anyLong());
-        verify(repository, never()).findAll();
+        assertEquals(sportType, sportReturned.getName());
     }
 
     @Test
