@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Sports booking</title>
+</head>
+<body>
+<h2 th:text="#{location.details.title}">Location details</h2>
+
+<table class="table table-striped" th:object="${location}">
+    <tr>
+        <th>Name</th>
+        <td><b th:text="*{name}"></b></td>
+    </tr>
+    <tr>
+        <th>Town</th>
+        <td th:text="*{town.name}" /></td>
+    </tr>
+    <tr>
+        <th>Sports</th>
+        <td>Name</td>
+        <td>Start date</td>
+        <td>End date</td>
+        <td>Avg. price</td>
+    </tr>
+    <tr th:each="sport: *{sports}">
+        <td/>
+        <td th:text="${sport.name}" />
+        <td th:text="${#temporals.format(sport.startDate, 'dd-MM-yyyy')}" />
+        <td th:text="${#temporals.format(sport.endDate, 'dd-MM-yyyy')}" />
+        <td th:text="#{priceAndCurrency(${sport.avgCostPerDay})}" />
+    </tr>
+</table>
+
+</body>
+</html>
