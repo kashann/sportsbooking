@@ -1,0 +1,26 @@
+package com.licenta.sportsbooking.model;
+
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
+
+@Data
+@NoArgsConstructor
+@Entity
+public class Location {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String name;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "town_id")
+    private Town town;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "location")
+    private Set<Sport> sports = new HashSet<>();
+}
