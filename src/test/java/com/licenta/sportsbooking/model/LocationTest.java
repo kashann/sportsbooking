@@ -3,7 +3,9 @@ package com.licenta.sportsbooking.model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -43,7 +45,7 @@ class LocationTest {
     void testSports() {
         Sport sport1 = new Sport();
         Sport sport2 = new Sport();
-        Set<Sport> sports = new HashSet<>();
+        List<Sport> sports = new ArrayList<>();
         sports.add(sport1);
         sports.add(sport2);
         location.setSports(sports);

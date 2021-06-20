@@ -9,7 +9,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class SearchLocationDTO {
+public class SearchLocationRequest {
 
     private String name;
     private List<String> sports;

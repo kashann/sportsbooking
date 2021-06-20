@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'locations')}">
-<head>
-    <meta charset="UTF-8">
-    <title>Sports booking</title>
-</head>
+
 <body>
 <h2 th:text="#{location.details.title}">Location details</h2>
 
@@ -26,11 +23,16 @@
     <tr th:each="sport: *{sports}">
         <td/>
         <td th:text="${sport.name}" />
-        <td th:text="${#temporals.format(sport.startDate, 'dd-MM-yyyy')}" />
-        <td th:text="${#temporals.format(sport.endDate, 'dd-MM-yyyy')}" />
+        <td th:text="${#temporals.format(sport.startDate, 'dd.MM.yyyy')}" />
+        <td th:text="${#temporals.format(sport.endDate, 'dd.MM.yyyy')}" />
         <td th:text="#{priceAndCurrency(${sport.avgCostPerDay})}" />
     </tr>
 </table>
 
+<div>
+    <a th:href="@{/locations/__${location.id}__/edit}" th:text="#{location.update.title}"/></a>
+    <br />
+    <a th:href="@{/locations/__${location.id}__/delete}" th:text="#{location.delete.title}"/></a>
+</div>
 </body>
 </html>

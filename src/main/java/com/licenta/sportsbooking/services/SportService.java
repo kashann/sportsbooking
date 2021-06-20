@@ -9,8 +9,8 @@ import java.util.Set;
 
 public interface SportService {
 
-    Set<SportDTO> findSportsByLocationNameAndPeriod(LocationDTO location, List<String> sportNames,
+    List<SportDTO> findSportsByLocationNameAndPeriod(LocationDTO location, List<String> sportNames,
                                                     LocalDate from, LocalDate to);
-    Set<SportDTO> findSportsByLocationAndName(LocationDTO location, List<String> sportNames);
-    Set<SportDTO> findSportsByLocation(LocationDTO location);
+    List<SportDTO> findSportsByLocationAndName(LocationDTO location, List<String> sportNames);
+    List<SportDTO> findSportsByLocation(LocationDTO location);
 }

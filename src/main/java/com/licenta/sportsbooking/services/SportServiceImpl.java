@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -23,9 +24,9 @@ public class SportServiceImpl implements SportService {
     private final SportToSportDtoConverter sportToSportDtoConverter;
 
     @Override
-    public Set<SportDTO> findSportsByLocationNameAndPeriod(LocationDTO location, List<String> sportNames, LocalDate from, LocalDate to) {
+    public List<SportDTO> findSportsByLocationNameAndPeriod(LocationDTO location, List<String> sportNames, LocalDate from, LocalDate to) {
         List<Sport> sports = sportRepository.findByLocationId(location.getId());
-        Set<SportDTO> result = new HashSet<>();
+        List<SportDTO> result = new ArrayList<>();
         sports.forEach(sport -> {
             if (sportNames.contains(sport.getName().name()) && isOverlapping(from, to, sport.getStartDate(), sport.getEndDate())) {
                 result.add(sportToSportDtoConverter.convert(sport));
@@ -35,9 +36,9 @@ public class SportServiceImpl implements SportService {
     }
 
     @Override
-    public Set<SportDTO> findSportsByLocationAndName(LocationDTO location, List<String> sportNames) {
+    public List<SportDTO> findSportsByLocationAndName(LocationDTO location, List<String> sportNames) {
         List<Sport> sports = sportRepository.findByLocationId(location.getId());
-        Set<SportDTO> result = new HashSet<>();
+        List<SportDTO> result = new ArrayList<>();
         sports.forEach(sport -> {
             if (sportNames.contains(sport.getName().name())) {
                 result.add(sportToSportDtoConverter.convert(sport));
@@ -47,9 +48,9 @@ public class SportServiceImpl implements SportService {
     }
 
     @Override
-    public Set<SportDTO> findSportsByLocation(LocationDTO location) {
+    public List<SportDTO> findSportsByLocation(LocationDTO location) {
         List<Sport> sports = sportRepository.findByLocationId(location.getId());
-        Set<SportDTO> result = new HashSet<>();
+        List<SportDTO> result = new ArrayList<>();
         sports.forEach(sport -> result.add(sportToSportDtoConverter.convert(sport)));
         return result;
     }

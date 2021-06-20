@@ -8,7 +8,9 @@ import com.licenta.sportsbooking.model.Town;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -18,7 +20,7 @@ class LocationToLocationDtoConverterTest {
     public static final Long ID_VALUE = 1L;
     public static final String NAME = "test name";
     public static final Town TOWN = new Town();
-    public static final Set<Sport> SPORTS = new HashSet<>();
+    public static final List<Sport> SPORTS = new ArrayList<>();
     LocationToLocationDtoConverter converter;
     TownToTownDtoConverter townConverter;
     SportToSportDtoConverter sportConverter;

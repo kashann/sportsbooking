@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -14,5 +15,5 @@ public class SearchResultDTO {
     private Long id;
     private String locationName;
     private String townName;
-    private Set<SportDTO> sports;
+    private List<SportDTO> sports;
 }

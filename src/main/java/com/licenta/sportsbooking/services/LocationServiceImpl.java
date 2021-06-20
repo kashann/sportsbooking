@@ -3,7 +3,7 @@ package com.licenta.sportsbooking.services;
 import com.licenta.sportsbooking.converters.LocationDtoToLocationConverter;
 import com.licenta.sportsbooking.converters.LocationToLocationDtoConverter;
 import com.licenta.sportsbooking.dto.LocationDTO;
-import com.licenta.sportsbooking.dto.SearchLocationDTO;
+import com.licenta.sportsbooking.dto.SearchLocationRequest;
 import com.licenta.sportsbooking.dto.SearchResultDTO;
 import com.licenta.sportsbooking.dto.SportDTO;
 import com.licenta.sportsbooking.exceptions.NotFoundException;
@@ -83,7 +83,7 @@ public class LocationServiceImpl implements LocationService {
         locationRepository.deleteById(id);
     }
 
-    public List<SearchResultDTO> searchLocations(SearchLocationDTO searchLocation) {
+    public List<SearchResultDTO> searchLocations(SearchLocationRequest searchLocation) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         LocalDate from = null;
         LocalDate to   = null;
@@ -105,7 +105,7 @@ public class LocationServiceImpl implements LocationService {
         List<SearchResultDTO> locationsSearchResults = new ArrayList<>();
         List<LocationDTO> searchResults = new ArrayList<>(getLocations());
         searchResults.forEach(locationDTO -> {
-            Set<SportDTO> sportSearchResults;
+            List<SportDTO> sportSearchResults;
             if (from == null && to == null) {
                 // allow parameter-less GET request for /locations to return all records
                 if (sports == null || sports.size() == 0) {

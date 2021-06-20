@@ -49,7 +49,7 @@ class SportServiceImplTest {
         List<String> sportTypes = new ArrayList<>();
         sportTypes.add(sportType.name());
 
-        Set<SportDTO> sportsReturned = sportService
+        List<SportDTO> sportsReturned = sportService
                 .findSportsByLocationNameAndPeriod(Objects.requireNonNull(locationToLocationDtoConverter.convert(location)), sportTypes,
                 LocalDate.of(2021, 6, 20), LocalDate.of(2021, 6, 24));
         assertFalse(sportsReturned.isEmpty());

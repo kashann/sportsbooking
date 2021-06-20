@@ -1,0 +1,40 @@
+<html  xmlns:th="https://www.thymeleaf.org">
+
+<body>
+<form>
+    <th:block th:fragment="input (label, name, type, sports)">
+        <div th:with="valid=${!#fields.hasErrors(name)}"
+             th:class="${'form-group' + (valid ? '' : ' has-error')}"
+             class="form-group">
+
+            <label class="col-sm-3 control-label" th:classappend="${type} == 'hidden' ? hidden : ''" th:text="${label}">Label</label>
+            <div class="col-sm-9">
+                <div th:switch="${type}">
+                    <input th:case="'hidden'" class="form-control hidden" type="text" th:field="*{__${name}__}" />
+                    <input th:case="'text'" class="form-control" type="text" th:field="*{__${name}__}" />
+                    <input th:case="'numeric'" min="0" step='0.01' class="form-control" type="number" th:field="*{__${name}__}" />
+                    <input th:case="'date'" class="input-dp form-control" type="text" autocomplete="off" th:field="*{__${name}__}" />
+                    <select th:case="'sports'" th:field="*{__${name}__}">
+                        <option th:each="sportValue : ${sports}"
+                                th:value="${sportValue}"
+                                th:text="${sportValue}">
+                        </option>
+                    </select>
+                </div>
+                <th:block th:if="${type} != 'hidden'">
+                    <span th:if="${valid}"
+                          class="glyphicon glyphicon-ok form-control-feedback"
+                          aria-hidden="true">
+                    </span>
+                    <th:block th:if="${!valid}">
+                        <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+                        <span class="help-inline" th:errors="*{__${name}__}">Error</span>
+                    </th:block>
+                </th:block>
+            </div>
+        </div>
+    </th:block>
+</form>
+
+</body>
+</html>

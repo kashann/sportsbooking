@@ -162,7 +162,7 @@ class LocationRestControllerTest {
         LocationDTO location = new LocationDTO();
         location.setId(1L);
         location.setName("Bunloc");
-        Set<SportDTO> sportDTOS = new HashSet<>();
+        List<SportDTO> sportDTOS = new ArrayList<>();
         SportDTO dh = new SportDTO();
         dh.setName(SportType.DOWNHILL);
         dh.setAvgCostPerDay(20.0);
