@@ -1,4 +1,6 @@
-# REST API for sport locations (to be continued with MVC + Thymeleaf...)
+# SportsBooking - Booking app for extreme sports tourism
+![SportsBooking logo](https://github.com/kashann/sportsbooking/blob/master/src/main/resources/static/resources/images/sports-booking-logo-black.png?raw=true)
+## REST API + Web MVC implementation
 
 ## Implementation Details
 In such locations, where extreme sports are practiced, there are periods of the year when these activities can be performed (Ski December-February, Kiting May-August, ATV all year round, etc.). 
@@ -19,8 +21,13 @@ Every location returned in the above-mentioned list contains the name, the sport
 
 
 -----------------------------------
+## Web MVC testing
 
-## Testing in Postman:
+Navigate to `http://localhost:8080/`
+
+-----------------------------------
+
+## REST API testing in Postman:
 
 1. Getting all locations:
    ```
