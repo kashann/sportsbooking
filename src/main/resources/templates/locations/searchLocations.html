@@ -1,0 +1,57 @@
+<html xmlns:th="https://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'locations')}">
+<head>
+    <link rel="stylesheet" th:href="@{/resources/css/bootstrap-datepicker3.css}"/>
+    <link rel="stylesheet" th:href="@{/resources/css/bootstrap-datepicker3.standalone.css}"/>
+</head>
+<body>
+    <h2 th:text="#{location.search.title}">Search Locations</h2>
+
+    <form class="form-horizontal" id="search-location-form">
+        <div class="form-group">
+            <div class="control-group" id="dateIntervalGroup">
+                <label class="col-sm-3 control-label mt-2" th:text="#{location.search.dateInterval}">Date interval</label>
+                <div class="col-sm-9 input-daterange input-group" id="datepicker" style="padding-top: 10px;">
+                    <input type="text" class="input-sm form-control" autocomplete="off" name="start" />
+                    <span class="input-group-addon" th:text="#{location.search.dateInterval.to}">to</span>
+                    <input type="text" class="input-sm form-control" autocomplete="off" name="end" />
+                </div>
+                </div>
+            </div>
+            <div class="control-group" id="selectSportsGroup">
+                <label class="col-sm-3 control-label mt-2" th:text="#{location.search.sports}">Sports you want to practice</label>
+                <div class="col-sm-9 mt-2">
+                    <select class="multiselect" multiple="multiple">
+                        <option th:each="sport : ${sports}"
+                                th:value="${sport}"
+                                th:text="${sport}">
+                        </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-3 col-sm-9">
+                <button type="submit" class="btn btn-default" th:text="#{location.search.submit}">Find Location</button>
+            </div>
+        </div>
+
+    </form>
+
+
+    <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script th:src="@{/webjars/jquery-ui/jquery-ui.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    <script th:src="@{/resources/js/bootstrap-datepicker.js}"></script>
+    <script>
+        $('.input-daterange').datepicker({
+            format: "dd.mm.yyyy",
+            weekStart: 1,
+            startDate: 0,
+            maxViewMode: 2,
+            multidateSeparator: "-",
+            autoclose: true,
+            todayHighlight: true
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,6 @@
+<groups xmlns="http://www.isdc.ro/wro">
+    <group name="sportsbooking">
+        <css>classpath:META-INF/resources/webjars/bootstrap/3.4.1/less/bootstrap.less</css>
+        <css>/sportsbooking.less</css>
+    </group>
+</groups>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'location')}">
 <head>
     <meta charset="UTF-8">
     <title>Sports booking</title>
@@ -9,19 +9,19 @@
 
 <table class="table table-striped" th:object="${location}">
     <tr>
-        <th>Name</th>
+        <th th:text="#{location.details.name}">Name</th>
         <td><b th:text="*{name}"></b></td>
     </tr>
     <tr>
-        <th>Town</th>
+        <th th:text="#{location.details.town}">Town</th>
         <td th:text="*{town.name}" /></td>
     </tr>
     <tr>
-        <th>Sports</th>
-        <td>Name</td>
-        <td>Start date</td>
-        <td>End date</td>
-        <td>Avg. price</td>
+        <th th:text="#{location.details.sports}">Sports</th>
+        <td th:text="#{location.details.sports.name}">Name</td>
+        <td th:text="#{location.details.sports.startDate}">Start date</td>
+        <td th:text="#{location.details.sports.endDate}">End date</td>
+        <td th:text="#{location.details.sports.avgPrice}">Avg. price</td>
     </tr>
     <tr th:each="sport: *{sports}">
         <td/>

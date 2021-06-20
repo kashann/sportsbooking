@@ -51,7 +51,7 @@ class LocationRestControllerTest {
     void setUp() {
         MockitoAnnotations.initMocks(this);
 
-        controller = new LocationRestController(service, sportService);
+        controller = new LocationRestController(service);
         mockMvc = MockMvcBuilders.standaloneSetup(controller)
                 .setControllerAdvice(new NotFoundControllerAdvice())
                 .build();

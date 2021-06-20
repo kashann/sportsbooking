@@ -26,7 +26,6 @@ import java.util.Set;
 public class LocationRestController {
 
     private final LocationServiceImpl locationService;
-    private final SportServiceImpl sportService;
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
@@ -63,57 +62,7 @@ public class LocationRestController {
                                                  @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate from,
                                                  @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate to,
                                                  @RequestParam(required = false) String sort) {
-        List<SportType> sportTypes = new ArrayList<>();
-        sports.forEach(sport -> {
-            try {
-                sportTypes.add(SportType.valueOf(sport));
-            } catch(Exception e) {
-                log.error(e.getMessage());
-            }
-        });
-        List<SearchResultDTO> locationsSearchResults = new ArrayList<>();
-        List<LocationDTO> searchResults = new ArrayList<>(locationService.getLocations());
-        searchResults.forEach(locationDTO -> {
-            Set<SportDTO> sportSearchResults = sportService.findSportsByLocationNameAndPeriod(locationDTO, sportTypes, from, to);
-            if (sportSearchResults.size() > 0) {
-                SearchResultDTO resultDTO = new SearchResultDTO(locationDTO.getName(), sportSearchResults);
-                locationsSearchResults.add(resultDTO);
-            }
-        });
-
-        if (sort != null) {
-            //sorting by the average of all sports at that location
-            locationsSearchResults.sort((o1, o2) -> {
-                List<SportDTO> s1 = new ArrayList<>(o1.getSports());
-                List<SportDTO> s2 = new ArrayList<>(o2.getSports());
-                Double avg1 = getAverage(s1);
-                Double avg2 = getAverage(s2);
-
-                if (sort.equals("ASC")) {
-                    if (avg1 > avg2)
-                        return 1;
-                    else if (avg1 < avg2)
-                        return -1;
-                }
-                else if (sort.equals("DESC")) {
-                    if (avg1 > avg2)
-                        return -1;
-                    else if (avg1 < avg2)
-                        return 1;
-                }
-                return 0;
-            });
-        }
-
-        return locationsSearchResults;
+        return locationService.searchLocations(sports, from, to, sort);
     }
 
-    private Double getAverage(List<SportDTO> sports) {
-        Double sum = 0.0;
-        for(int i = 0; i < sports.size(); i++) {
-            sum += sports.get(i).getAvgCostPerDay();
-        }
-        sum /= sports.size();
-        return sum;
-    }
 }
