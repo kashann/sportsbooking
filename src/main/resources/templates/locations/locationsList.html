@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+
+<html xmlns:th="https://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'locations')}">
+
+<body>
+
+    <h2 th:text="#{location.search.results.title}">Owners</h2>
+
+    <table id="locations" class="table table-striped">
+        <thead>
+        <tr>
+            <th style="width: 150px;" th:text="#{location.search.results.name}">Name</th>
+            <th th:text="#{location.search.results.town}">Town</th>
+            <th th:text="#{location.search.results.sports}">Sports</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="location : ${selections}">
+            <td>
+                <a th:href="@{/locations/__${location.id}__}" th:text="${location.name}"/></a>
+            </td>
+            <td th:text="${location.town.name}"/>
+            <td><span th:each="sport : ${location.sports}" th:text="${sport.name} "/></td>
+        </tr>
+        </tbody>
+    </table>
+
+</body>
+</html>

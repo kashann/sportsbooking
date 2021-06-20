@@ -6,14 +6,16 @@
 <body>
     <h2 th:text="#{location.search.title}">Search Locations</h2>
 
-    <form class="form-horizontal" id="search-location-form">
+    <div class="not-found" th:if="${result}" th:text="${result}"></div>
+
+    <form class="form-horizontal" id="search-location-form" th:object="${searchLocation}" th:action="@{/locations}" method="GET">
         <div class="form-group">
             <div class="control-group" id="dateIntervalGroup">
                 <label class="col-sm-3 control-label mt-2" th:text="#{location.search.dateInterval}">Date interval</label>
                 <div class="col-sm-9 input-daterange input-group" id="datepicker" style="padding-top: 10px;">
-                    <input type="text" class="input-sm form-control" autocomplete="off" name="start" />
+                    <input type="text" class="input-sm form-control" autocomplete="off" name="start" th:field="*{fromDate}" required/>
                     <span class="input-group-addon" th:text="#{location.search.dateInterval.to}">to</span>
-                    <input type="text" class="input-sm form-control" autocomplete="off" name="end" />
+                    <input type="text" class="input-sm form-control" autocomplete="off" name="end" th:field="*{toDate}" required/>
                 </div>
                 </div>
             </div>

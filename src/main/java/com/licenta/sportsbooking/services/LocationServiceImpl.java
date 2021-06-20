@@ -99,7 +99,7 @@ public class LocationServiceImpl implements LocationService {
         searchResults.forEach(locationDTO -> {
             Set<SportDTO> sportSearchResults = sportService.findSportsByLocationNameAndPeriod(locationDTO, sportTypes, from, to);
             if (sportSearchResults.size() > 0) {
-                SearchResultDTO resultDTO = new SearchResultDTO(locationDTO.getName(), sportSearchResults);
+                SearchResultDTO resultDTO = new SearchResultDTO(locationDTO.getId(), locationDTO.getName(), sportSearchResults);
                 locationsSearchResults.add(resultDTO);
             }
         });

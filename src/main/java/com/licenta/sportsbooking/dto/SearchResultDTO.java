@@ -9,6 +9,7 @@ import java.util.Set;
 @AllArgsConstructor
 public class SearchResultDTO {
 
+    private Long id;
     private String locationName;
     private Set<SportDTO> sports;
 }
