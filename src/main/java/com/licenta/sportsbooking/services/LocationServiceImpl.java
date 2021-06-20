@@ -1,23 +1,22 @@
 package com.licenta.sportsbooking.services;
 
-import com.licenta.sportsbooking.dto.LocationDTO;
 import com.licenta.sportsbooking.converters.LocationDtoToLocationConverter;
 import com.licenta.sportsbooking.converters.LocationToLocationDtoConverter;
+import com.licenta.sportsbooking.dto.LocationDTO;
+import com.licenta.sportsbooking.dto.SearchLocationDTO;
 import com.licenta.sportsbooking.dto.SearchResultDTO;
 import com.licenta.sportsbooking.dto.SportDTO;
 import com.licenta.sportsbooking.exceptions.NotFoundException;
-import com.licenta.sportsbooking.mappers.LocationMapper;
 import com.licenta.sportsbooking.model.Location;
 import com.licenta.sportsbooking.model.SportType;
 import com.licenta.sportsbooking.repositories.LocationRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -29,7 +28,6 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class LocationServiceImpl implements LocationService {
 
-    private final LocationMapper locationMapper;
     private final LocationRepository locationRepository;
     private final LocationDtoToLocationConverter locationDtoToLocationConverter;
     private final LocationToLocationDtoConverter locationToLocationDtoConverter;
@@ -50,7 +48,7 @@ public class LocationServiceImpl implements LocationService {
 
         return locationRepository.findAll()
                 .stream()
-                .map(locationMapper::locationToLocationDto)
+                .map(locationToLocationDtoConverter::convert)
                 .collect(Collectors.toList());
     }
 
@@ -85,21 +83,51 @@ public class LocationServiceImpl implements LocationService {
         locationRepository.deleteById(id);
     }
 
+    public List<SearchResultDTO> searchLocations(SearchLocationDTO searchLocation) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+        LocalDate from = null;
+        LocalDate to   = null;
+        if (searchLocation.getFromDate() != null && !searchLocation.getFromDate().isEmpty()) {
+            from = LocalDate.parse(searchLocation.getFromDate(), formatter);
+        }
+        if (searchLocation.getToDate() != null && !searchLocation.getToDate().isEmpty()) {
+            to = LocalDate.parse(searchLocation.getToDate(), formatter);
+        }
+
+        return searchLocations(searchLocation.getSports(), from, to);
+    }
+
+    public List<SearchResultDTO> searchLocations(List<String> sports, LocalDate from, LocalDate to) {
+        return searchLocations(sports, from, to, null);
+    }
+
     public List<SearchResultDTO> searchLocations(List<String> sports, LocalDate from, LocalDate to, String sort) {
-        List<SportType> sportTypes = new ArrayList<>();
-        sports.forEach(sport -> {
-            try {
-                sportTypes.add(SportType.valueOf(sport));
-            } catch(Exception e) {
-                log.error(e.getMessage());
-            }
-        });
         List<SearchResultDTO> locationsSearchResults = new ArrayList<>();
         List<LocationDTO> searchResults = new ArrayList<>(getLocations());
         searchResults.forEach(locationDTO -> {
-            Set<SportDTO> sportSearchResults = sportService.findSportsByLocationNameAndPeriod(locationDTO, sportTypes, from, to);
+            Set<SportDTO> sportSearchResults;
+            if (from == null && to == null) {
+                // allow parameter-less GET request for /locations to return all records
+                if (sports == null || sports.size() == 0) {
+                    sportSearchResults = sportService.findSportsByLocation(locationDTO);
+                } else {
+                    sportSearchResults = sportService.findSportsByLocationAndName(locationDTO, sports);
+                }
+            } else {
+                // allow parameter-less GET request for /locations to return all records
+                if (sports == null || sports.size() == 0) {
+                    sportSearchResults = sportService.findSportsByLocationNameAndPeriod(locationDTO, SportType.getAllNames(), from, to);
+                } else {
+                    sportSearchResults = sportService.findSportsByLocationNameAndPeriod(locationDTO, sports, from, to);
+                }
+            }
+
             if (sportSearchResults.size() > 0) {
-                SearchResultDTO resultDTO = new SearchResultDTO(locationDTO.getId(), locationDTO.getName(), sportSearchResults);
+                SearchResultDTO resultDTO = new SearchResultDTO(
+                        locationDTO.getId(),
+                        locationDTO.getName(),
+                        locationDTO.getTown().getName(),
+                        sportSearchResults);
                 locationsSearchResults.add(resultDTO);
             }
         });
@@ -133,8 +161,8 @@ public class LocationServiceImpl implements LocationService {
 
     private Double getAverage(List<SportDTO> sports) {
         Double sum = 0.0;
-        for (int i = 0; i < sports.size(); i++) {
-            sum += sports.get(i).getAvgCostPerDay();
+        for (SportDTO sport : sports) {
+            sum += sport.getAvgCostPerDay();
         }
         sum /= sports.size();
         return sum;

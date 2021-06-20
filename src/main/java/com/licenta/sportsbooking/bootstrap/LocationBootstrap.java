@@ -3,7 +3,6 @@ package com.licenta.sportsbooking.bootstrap;
 import com.licenta.sportsbooking.model.*;
 import com.licenta.sportsbooking.repositories.LocationRepository;
 import com.licenta.sportsbooking.repositories.SportRepository;
-import com.licenta.sportsbooking.model.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;

@@ -1,10 +1,10 @@
 package com.licenta.sportsbooking.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.licenta.sportsbooking.controllers.rest.LocationRestController;
 import com.licenta.sportsbooking.dto.LocationDTO;
 import com.licenta.sportsbooking.dto.SportDTO;
 import com.licenta.sportsbooking.dto.TownDTO;
-import com.licenta.sportsbooking.controllers.rest.LocationRestController;
 import com.licenta.sportsbooking.model.SportType;
 import com.licenta.sportsbooking.services.LocationServiceImpl;
 import com.licenta.sportsbooking.services.SportServiceImpl;
@@ -28,8 +28,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 class LocationRestControllerTest {

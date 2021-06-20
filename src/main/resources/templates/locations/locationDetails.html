@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'location')}">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'locations')}">
 <head>
     <meta charset="UTF-8">
     <title>Sports booking</title>
@@ -14,7 +14,7 @@
     </tr>
     <tr>
         <th th:text="#{location.details.town}">Town</th>
-        <td th:text="*{town.name}" /></td>
+        <td th:text="*{town.name}"></td>
     </tr>
     <tr>
         <th th:text="#{location.details.sports}">Sports</th>

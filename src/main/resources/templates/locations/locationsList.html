@@ -17,10 +17,12 @@
         <tbody>
         <tr th:each="location : ${selections}">
             <td>
-                <a th:href="@{/locations/__${location.id}__}" th:text="${location.name}"/></a>
+                <a th:href="@{/locations/__${location.id}__}" th:text="${location.locationName}"/></a>
             </td>
-            <td th:text="${location.town.name}"/>
-            <td><span th:each="sport : ${location.sports}" th:text="${sport.name} "/></td>
+            <td th:text="${location.townName}"/>
+            <td>
+                <span th:each="sport : ${location.sports}" th:text="#{separateByComma(${sport.name})}"/>
+            </td>
         </tr>
         </tbody>
     </table>

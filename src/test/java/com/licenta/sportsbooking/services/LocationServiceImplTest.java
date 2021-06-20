@@ -1,27 +1,17 @@
 package com.licenta.sportsbooking.services;
 
-import com.licenta.sportsbooking.dto.LocationDTO;
-import com.licenta.sportsbooking.converters.LocationDtoToLocationConverter;
 import com.licenta.sportsbooking.converters.LocationToLocationDtoConverter;
+import com.licenta.sportsbooking.dto.LocationDTO;
 import com.licenta.sportsbooking.exceptions.NotFoundException;
-import com.licenta.sportsbooking.mappers.LocationMapper;
 import com.licenta.sportsbooking.model.Location;
-import com.licenta.sportsbooking.repositories.LocationRepository;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.*;
 
 @SpringBootTest
 class LocationServiceImplTest {

@@ -1,7 +1,9 @@
 package com.licenta.sportsbooking.dto;
 
 import com.licenta.sportsbooking.model.SportType;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;

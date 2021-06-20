@@ -1,12 +1,8 @@
 package com.licenta.sportsbooking.controllers.rest;
 
 import com.licenta.sportsbooking.dto.LocationDTO;
-import com.licenta.sportsbooking.dto.LocationListDTO;
 import com.licenta.sportsbooking.dto.SearchResultDTO;
-import com.licenta.sportsbooking.dto.SportDTO;
-import com.licenta.sportsbooking.model.SportType;
 import com.licenta.sportsbooking.services.LocationServiceImpl;
-import com.licenta.sportsbooking.services.SportServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -15,9 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Slf4j
 @RestController
@@ -29,8 +23,8 @@ public class LocationRestController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public LocationListDTO getAllLocations() {
-        return new LocationListDTO(locationService.getLocations());
+    public List<LocationDTO> getAllLocations() {
+        return locationService.getLocations();
     }
 
     @GetMapping("/{id}")

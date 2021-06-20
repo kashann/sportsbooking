@@ -8,17 +8,13 @@ import com.licenta.sportsbooking.services.LocationServiceImpl;
 import com.licenta.sportsbooking.utils.LangMsg;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Slf4j
@@ -28,7 +24,7 @@ import java.util.List;
 public class LocationController {
 
     private final static String VIEWS_LOCATION_DETAILS = "locations/locationDetails";
-    private final static String VIEWS_LOCATION_LIST    = "locations/locationList";
+    private final static String VIEWS_LOCATION_LIST    = "locations/locationsList";
     private final static String VIEWS_SEARCH_LOCATIONS = "locations/searchLocations";
 
     private final LocationServiceImpl locationService;
@@ -51,19 +47,8 @@ public class LocationController {
     }
 
     @GetMapping
-    public String processFindForm(SearchLocationDTO searchLocation, BindingResult result, Model model) {
-        // allow parameter-less GET request for /locations to return all records
-        if (searchLocation.getSports() == null) {
-            searchLocation.setSports(SportType.getAllNames());
-        }
-
-        // find locations
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-        List<SearchResultDTO> results = locationService.searchLocations(
-                searchLocation.getSports(),
-                LocalDate.parse(searchLocation.getFromDate(), formatter),
-                LocalDate.parse(searchLocation.getToDate(), formatter),
-                null);
+    public String processFindForm(SearchLocationDTO searchLocation, Model model) {
+        List<SearchResultDTO> results = locationService.searchLocations(searchLocation);
 
         if (results.isEmpty()) {
             // no locations found

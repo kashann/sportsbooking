@@ -13,16 +13,16 @@
             <div class="control-group" id="dateIntervalGroup">
                 <label class="col-sm-3 control-label mt-2" th:text="#{location.search.dateInterval}">Date interval</label>
                 <div class="col-sm-9 input-daterange input-group" id="datepicker" style="padding-top: 10px;">
-                    <input type="text" class="input-sm form-control" autocomplete="off" name="start" th:field="*{fromDate}" required/>
+                    <input type="text" class="input-sm form-control" autocomplete="off" name="start" th:field="*{fromDate}"/>
                     <span class="input-group-addon" th:text="#{location.search.dateInterval.to}">to</span>
-                    <input type="text" class="input-sm form-control" autocomplete="off" name="end" th:field="*{toDate}" required/>
+                    <input type="text" class="input-sm form-control" autocomplete="off" name="end" th:field="*{toDate}"/>
                 </div>
                 </div>
             </div>
             <div class="control-group" id="selectSportsGroup">
                 <label class="col-sm-3 control-label mt-2" th:text="#{location.search.sports}">Sports you want to practice</label>
                 <div class="col-sm-9 mt-2">
-                    <select class="multiselect" multiple="multiple">
+                    <select class="multiselect" multiple="multiple" th:field="*{sports}">
                         <option th:each="sport : ${sports}"
                                 th:value="${sport}"
                                 th:text="${sport}">

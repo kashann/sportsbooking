@@ -19,6 +19,13 @@ The users can specify:
 In the mobile app, the response is shown from the endpoint and is an ordered list based on the cost estimated for the entire stay. 
 Every location returned in the above-mentioned list contains the name, the sports available there and the cost. 
 
+-----------------------------------
+## Starting the app
+* Right click on SportsBookingApplication -> run ...main()
+* On top bar, click on SportsBookingApplication
+* Edit Configurations
+* Add Maven Goal to Before Launch section `generate-resources`
+* Hit RUN
 
 -----------------------------------
 ## Web MVC testing

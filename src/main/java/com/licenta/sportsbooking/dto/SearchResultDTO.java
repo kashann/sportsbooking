@@ -1,6 +1,8 @@
 package com.licenta.sportsbooking.dto;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Set;
 
@@ -11,5 +13,6 @@ public class SearchResultDTO {
 
     private Long id;
     private String locationName;
+    private String townName;
     private Set<SportDTO> sports;
 }
