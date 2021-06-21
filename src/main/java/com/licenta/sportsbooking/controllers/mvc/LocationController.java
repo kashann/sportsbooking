@@ -56,7 +56,8 @@ public class LocationController {
 
     @GetMapping
     public String processFindForm(SearchLocationRequest searchLocation, Model model) {
-        List<SearchResultDTO> results = locationService.searchLocations(searchLocation);
+        boolean includeSportless = searchLocation.getName() == null && searchLocation.getSports() == null && searchLocation.getFromDate() == null && searchLocation.getToDate() == null;
+        List<SearchResultDTO> results = locationService.searchLocations(searchLocation, includeSportless);
 
         if (results.isEmpty()) {
             // no locations found

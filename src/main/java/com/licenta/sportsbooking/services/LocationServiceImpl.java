@@ -35,9 +35,6 @@ public class LocationServiceImpl implements LocationService {
     private final SportServiceImpl sportService;
     private final TownRepository townRepository;
 
-    @Value("${search.locations.return.withNoSports}")
-    private boolean returnSearchResultsEvenIfNoSportsAreAllocated;
-
     @Override
     public LocationDTO findById(Long id) {
         Optional<Location> locationOptional = locationRepository.findById(id);
@@ -88,7 +85,7 @@ public class LocationServiceImpl implements LocationService {
         locationRepository.deleteById(id);
     }
 
-    public List<SearchResultDTO> searchLocations(SearchLocationRequest searchLocation) {
+    public List<SearchResultDTO> searchLocations(SearchLocationRequest searchLocation, boolean includeSportLessOnes) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         LocalDate from = null;
         LocalDate to   = null;
@@ -99,14 +96,17 @@ public class LocationServiceImpl implements LocationService {
             to = LocalDate.parse(searchLocation.getToDate(), formatter);
         }
 
-        return searchLocations(searchLocation.getSports(), from, to);
+        return searchLocations(searchLocation.getSports(), from, to, includeSportLessOnes);
     }
 
-    public List<SearchResultDTO> searchLocations(List<String> sports, LocalDate from, LocalDate to) {
-        return searchLocations(sports, from, to, null);
+    public List<SearchResultDTO> searchLocations(List<String> sports, LocalDate from, LocalDate to, boolean includeSportLessOnes) {
+        return searchLocations(sports, from, to, null, includeSportLessOnes);
     }
 
     public List<SearchResultDTO> searchLocations(List<String> sports, LocalDate from, LocalDate to, String sort) {
+        return searchLocations(sports, from, to, sort, false);
+    }
+    public List<SearchResultDTO> searchLocations(List<String> sports, LocalDate from, LocalDate to, String sort, boolean includeSportLessOnes) {
         List<SearchResultDTO> locationsSearchResults = new ArrayList<>();
         List<LocationDTO> searchResults = new ArrayList<>(getLocations());
         searchResults.forEach(locationDTO -> {
@@ -127,7 +127,7 @@ public class LocationServiceImpl implements LocationService {
                 }
             }
 
-            if (returnSearchResultsEvenIfNoSportsAreAllocated || sportSearchResults.size() > 0) {
+            if (includeSportLessOnes || sportSearchResults.size() > 0) {
                 SearchResultDTO resultDTO = new SearchResultDTO(
                         locationDTO.getId(),
                         locationDTO.getName(),
