@@ -21,7 +21,9 @@ public class SportDtoToSportConverter implements Converter<SportDTO, Sport> {
 
         final Sport sport = new Sport();
         sport.setId(source.getId());
-        sport.setName(SportType.valueOf(source.getName()));
+        if (source.getName() != null) {
+            sport.setName(SportType.valueOf(source.getName()));
+        }
         sport.setStartDate(source.getStartDate());
         sport.setEndDate(source.getEndDate());
         sport.setAvgCostPerDay(source.getAvgCostPerDay());

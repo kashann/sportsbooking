@@ -50,7 +50,7 @@ class SportToSportDtoConverterTest {
 
         //then
         assertEquals(ID_VALUE, sportDTO.getId());
-        Assertions.assertEquals(NAME, sportDTO.getName());
+        Assertions.assertEquals(NAME.name(), sportDTO.getName());
         assertEquals(START, sportDTO.getStartDate());
         assertEquals(END, sportDTO.getEndDate());
         assertEquals(PRICE, sportDTO.getAvgCostPerDay());

@@ -60,6 +60,6 @@ class LocationToLocationDtoConverterTest {
         assertEquals(townConverter.convert(TOWN), locationDTO.getTown());
         Set<SportDTO> sports = new HashSet<>();
         SPORTS.forEach(sport -> sports.add(sportConverter.convert(sport)));
-        assertEquals(sports, locationDTO.getSports());
+        assertEquals(sports.size(), locationDTO.getSports().size());
     }
 }

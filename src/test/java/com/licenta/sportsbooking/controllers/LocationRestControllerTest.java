@@ -2,12 +2,14 @@ package com.licenta.sportsbooking.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.licenta.sportsbooking.controllers.rest.LocationRestController;
+import com.licenta.sportsbooking.converters.TownToTownDtoConverter;
 import com.licenta.sportsbooking.dto.LocationDTO;
 import com.licenta.sportsbooking.dto.SportDTO;
 import com.licenta.sportsbooking.dto.TownDTO;
 import com.licenta.sportsbooking.model.SportType;
 import com.licenta.sportsbooking.services.LocationServiceImpl;
 import com.licenta.sportsbooking.services.SportServiceImpl;
+import com.licenta.sportsbooking.services.TownService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -45,6 +47,9 @@ class LocationRestControllerTest {
 
     @Autowired
     ObjectMapper objectMapper;
+
+    @Autowired
+    TownService townService;
 
     @BeforeEach
     void setUp() {
@@ -97,6 +102,7 @@ class LocationRestControllerTest {
         LocationDTO location = new LocationDTO();
         location.setId(2L);
         location.setName("POST Test");
+        location.setTown(townService.getTowns().get(0));
 
         when(service.saveLocation(location, location.getTown().getId())).thenReturn(location);
 
@@ -114,6 +120,7 @@ class LocationRestControllerTest {
         LocationDTO location = new LocationDTO();
         location.setId(locationId);
         location.setName("PUT Test");
+        location.setTown(townService.getTowns().get(0));
 
         mockMvc.perform(post("/api/locations/new")
                 .contentType(MediaType.APPLICATION_JSON)

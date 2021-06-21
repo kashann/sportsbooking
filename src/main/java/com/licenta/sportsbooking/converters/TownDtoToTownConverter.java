@@ -16,8 +16,6 @@ import java.util.Optional;
 @Component
 public class TownDtoToTownConverter implements Converter<TownDTO, Town> {
 
-    @Autowired
-    private TownRepository townRepository;
 
     @Synchronized
     @Nullable
@@ -30,13 +28,6 @@ public class TownDtoToTownConverter implements Converter<TownDTO, Town> {
         final Town town = new Town();
         town.setId(source.getId());
         town.setName(source.getName());
-
-        if (source.getId() != null) {
-            Optional<Town> databaseTown = townRepository.findById(source.getId());
-            if (databaseTown.isPresent()) {
-                town.setRegion(databaseTown.get().getRegion());
-            }
-        }
 
         return town;
     }

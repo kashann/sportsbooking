@@ -1,12 +1,15 @@
 package com.licenta.sportsbooking.services;
 
+import com.licenta.sportsbooking.converters.LocationDtoToLocationConverter;
 import com.licenta.sportsbooking.converters.LocationToLocationDtoConverter;
+import com.licenta.sportsbooking.converters.SportToSportDtoConverter;
 import com.licenta.sportsbooking.dto.LocationDTO;
 import com.licenta.sportsbooking.dto.SportDTO;
 import com.licenta.sportsbooking.model.Location;
 import com.licenta.sportsbooking.model.Sport;
 import com.licenta.sportsbooking.model.SportType;
 import com.licenta.sportsbooking.repositories.LocationRepository;
+import com.licenta.sportsbooking.repositories.SportRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,10 +33,16 @@ class SportServiceImplTest {
     LocationServiceImpl locationService;
 
     @Autowired
-    LocationRepository locationRepository;
+    LocationToLocationDtoConverter locationToLocationDtoConverter;
 
     @Autowired
-    LocationToLocationDtoConverter locationToLocationDtoConverter;
+    LocationDtoToLocationConverter locationDtoToLocationConverter;
+
+    @Autowired
+    TownService townService;
+
+    @Autowired
+    SportRepository sportRepository;
 
     @Test
     void findSportsByLocationNameAndPeriodTest() {
@@ -43,22 +52,24 @@ class SportServiceImplTest {
         sport.setName(sportType);
         sport.setStartDate(LocalDate.of(2021, 1, 1));
         sport.setEndDate(LocalDate.of(2022, 1, 1));
-        sport.setLocation(location);
 
         LocationDTO locationDTO = locationToLocationDtoConverter.convert(location);
-        locationService.saveLocation(locationDTO, locationDTO.getTown().getId());
+        locationDTO.setTown(townService.getTowns().get(0));
+        LocationDTO savedLocation = locationService.saveLocation(locationDTO, locationDTO.getTown().getId());
+        sport.setLocation(locationDtoToLocationConverter.convert(savedLocation));
+        sportRepository.save(sport);
 
         List<String> sportTypes = new ArrayList<>();
         sportTypes.add(sportType.name());
 
         List<SportDTO> sportsReturned = sportService
-                .findSportsByLocationNameAndPeriod(Objects.requireNonNull(locationDTO), sportTypes,
+                .findSportsByLocationNameAndPeriod(Objects.requireNonNull(savedLocation), sportTypes,
                 LocalDate.of(2021, 6, 20), LocalDate.of(2021, 6, 24));
         assertFalse(sportsReturned.isEmpty());
         SportDTO sportReturned = sportsReturned.iterator().next();
 
         assertNotNull(sportReturned, "Null sport returned");
-        assertEquals(sportType, sportReturned.getName());
+        assertEquals(sportType.name(), sportReturned.getName());
     }
 
     @Test

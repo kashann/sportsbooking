@@ -16,7 +16,7 @@ public class IndexController {
 
     @RequestMapping({"/", "", "index", "index.html"})
     public String index(Model model) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
         model.addAttribute("serverTime", formatter.format(LocalDateTime.now()));
         return "index";
     }

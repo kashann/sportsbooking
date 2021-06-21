@@ -2,8 +2,10 @@ package com.licenta.sportsbooking.converters;
 
 import com.licenta.sportsbooking.dto.TownDTO;
 import com.licenta.sportsbooking.model.Town;
+import com.licenta.sportsbooking.repositories.TownRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.junit.jupiter.api.Assertions.*;
 

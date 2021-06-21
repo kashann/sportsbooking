@@ -4,6 +4,7 @@ import com.licenta.sportsbooking.converters.LocationToLocationDtoConverter;
 import com.licenta.sportsbooking.dto.LocationDTO;
 import com.licenta.sportsbooking.exceptions.NotFoundException;
 import com.licenta.sportsbooking.model.Location;
+import com.licenta.sportsbooking.model.Town;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -22,11 +23,15 @@ class LocationServiceImplTest {
     @Autowired
     LocationToLocationDtoConverter locationToLocationDtoConverter;
 
+    @Autowired
+    TownService townService;
+
     @Test
     void findById() {
         Location location = new Location();
         location.setId(1L);
         LocationDTO locationDTO = locationToLocationDtoConverter.convert(location);
+        locationDTO.setTown(townService.getTowns().get(0));
         service.saveLocation(locationDTO, locationDTO.getTown().getId());
 
         LocationDTO locationReturned = service.findById(1L);
@@ -45,17 +50,17 @@ class LocationServiceImplTest {
     @Test
     void getLocations() {
         Location location = new Location();
-        ArrayList<Location> locationsData = new ArrayList();
-        locationsData.add(location);
+        location.setName("TEST GET LOCATIONS");
         LocationDTO initialLocationDto = locationToLocationDtoConverter.convert(location);
+        initialLocationDto.setTown(townService.getTowns().get(0));
 
         service.saveLocation(initialLocationDto, initialLocationDto.getTown().getId());
 
         List<LocationDTO> locations = service.getLocations();
 
         boolean found = false;
-        for(LocationDTO locationDTO : locations) {
-            if (locationDTO.equals(initialLocationDto)) {
+        for (LocationDTO locationDTO : locations) {
+            if (locationDTO.getName() != null && locationDTO.getName().equals(initialLocationDto.getName())) {
                 found = true;
             }
         }
@@ -67,6 +72,7 @@ class LocationServiceImplTest {
         Location location = new Location();
         location.setId(1L);
         LocationDTO locationDTO = locationToLocationDtoConverter.convert(location);
+        locationDTO.setTown(townService.getTowns().get(0));
         service.saveLocation(locationDTO, locationDTO.getTown().getId());
 
         LocationDTO locationReturned = service.saveLocation(locationDTO, locationDTO.getTown().getId());
@@ -82,6 +88,7 @@ class LocationServiceImplTest {
         Location location = new Location();
         location.setId(idToDelete);
         LocationDTO locationDTO = locationToLocationDtoConverter.convert(location);
+        locationDTO.setTown(townService.getTowns().get(0));
         service.saveLocation(locationDTO, locationDTO.getTown().getId());
 
         //when
