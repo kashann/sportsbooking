@@ -1,8 +1,8 @@
 package com.licenta.sportsbooking.bootstrap;
 
 import com.licenta.sportsbooking.model.*;
-import com.licenta.sportsbooking.repositories.LocationRepository;
-import com.licenta.sportsbooking.repositories.SportRepository;
+import com.licenta.sportsbooking.repositories.*;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -15,40 +15,39 @@ import java.util.Optional;
 
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class LocationBootstrap implements ApplicationListener<ContextRefreshedEvent> {
 
     private final LocationRepository locationRepository;
     private final SportRepository sportRepository;
-
-    public LocationBootstrap(LocationRepository locationRepository, SportRepository sportRepository) {
-        this.locationRepository = locationRepository;
-        this.sportRepository = sportRepository;
-    }
+    private final TownRepository townRepository;
+    private final RegionRepository regionRepository;
+    private final CountryRepository countryRepository;
 
     @Override
     @Transactional
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
-        locationRepository.saveAll(getLocations());
         log.debug("Loading Bootstrap Data");
-    }
 
-    private List<Location> getLocations() {
         List<Location> locations = new ArrayList<>();
+        List<Country> countries = new ArrayList<>();
+
+        //sports are initialized through data.sql
 
         //Get sports
         Optional<Sport> skiOptional = sportRepository.findById(1L);
         if (skiOptional.isEmpty()) {
             throw new RuntimeException("Expected Sport not found!");
         }
-        Optional<Sport> paraglidingOptional = sportRepository.findByName(SportType.PARAGLIDING);
+        Optional<Sport> paraglidingOptional = sportRepository.findById(2L);
         if (paraglidingOptional.isEmpty()) {
             throw new RuntimeException("Expected Sport not found!");
         }
-        Optional<Sport> atvOptional = sportRepository.findByName(SportType.ATV);
+        Optional<Sport> atvOptional = sportRepository.findById(3L);
         if (atvOptional.isEmpty()) {
             throw new RuntimeException("Expected Sport not found!");
         }
-        Optional<Sport> downhillOptional = sportRepository.findByName(SportType.DOWNHILL);
+        Optional<Sport> downhillOptional = sportRepository.findById(4L);
         if (downhillOptional.isEmpty()) {
             throw new RuntimeException("Expected Sport not found!");
         }
@@ -112,7 +111,11 @@ public class LocationBootstrap implements ApplicationListener<ContextRefreshedEv
         auSnowboarding.setLocation(angertal);
         locations.add(angertal);
 
-        return locations;
+        countries.add(romania);
+        countries.add(austria);
+
+        locationRepository.saveAll(locations);
+        countryRepository.saveAll(countries);
     }
 
 }

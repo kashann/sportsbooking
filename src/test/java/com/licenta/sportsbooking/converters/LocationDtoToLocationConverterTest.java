@@ -29,7 +29,7 @@ class LocationDtoToLocationConverterTest {
     void setUp() {
         townConverter = new TownDtoToTownConverter();
         sportConverter = new SportDtoToSportConverter();
-        converter = new LocationDtoToLocationConverter(townConverter, sportConverter);
+        converter = new LocationDtoToLocationConverter(sportConverter);
     }
 
     @Test

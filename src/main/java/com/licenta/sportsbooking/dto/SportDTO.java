@@ -1,6 +1,5 @@
 package com.licenta.sportsbooking.dto;
 
-import com.licenta.sportsbooking.model.SportType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,7 +8,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.text.DecimalFormat;
 import java.time.LocalDate;
 
 @Data
@@ -20,7 +18,7 @@ public class SportDTO implements Comparable<SportDTO> {
     private Long id;
 
     @NotBlank
-    private SportType name;
+    private String name;
 
     @DateTimeFormat(pattern = "dd.MM.yyyy")
     private LocalDate startDate;
@@ -31,7 +29,9 @@ public class SportDTO implements Comparable<SportDTO> {
     @NotNull
     private Double avgCostPerDay;
 
-
+    public boolean isNew() {
+        return this.id == null;
+    }
 
     @Override
     public int compareTo(SportDTO sport) {

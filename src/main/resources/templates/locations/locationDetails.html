@@ -21,7 +21,7 @@
         <td th:text="#{location.details.sports.avgPrice}">Avg. price</td>
     </tr>
     <tr th:each="sport: *{sports}">
-        <td/>
+        <th/>
         <td th:text="${sport.name}" />
         <td th:text="${#temporals.format(sport.startDate, 'dd.MM.yyyy')}" />
         <td th:text="${#temporals.format(sport.endDate, 'dd.MM.yyyy')}" />

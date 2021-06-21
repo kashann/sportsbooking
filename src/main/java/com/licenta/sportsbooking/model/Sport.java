@@ -7,6 +7,7 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Objects;
 
 @Data
 @NoArgsConstructor
@@ -26,13 +27,26 @@ public class Sport implements Comparable<Sport> {
     private LocalDate endDate;
     private Double avgCostPerDay;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "location_id")
     private Location location;
 
     public void setLocation(Location location) {
-        location.getSports().add(this);
+        //prevent endless loop
+        if (this.location != null && this.location.equals(location)) {
+            return;
+        }
+        //set new location
+        Location oldLocation = this.location;
         this.location = location;
+        //remove from the old location
+        if (oldLocation != null) {
+            oldLocation.removeSport(this);
+        }
+        //set sport into new location
+        if (location != null) {
+            location.addSport(this);
+        }
     }
 
     @Override

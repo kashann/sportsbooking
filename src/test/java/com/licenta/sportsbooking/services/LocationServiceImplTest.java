@@ -26,7 +26,8 @@ class LocationServiceImplTest {
     void findById() {
         Location location = new Location();
         location.setId(1L);
-        service.saveLocation(locationToLocationDtoConverter.convert(location));
+        LocationDTO locationDTO = locationToLocationDtoConverter.convert(location);
+        service.saveLocation(locationDTO, locationDTO.getTown().getId());
 
         LocationDTO locationReturned = service.findById(1L);
 
@@ -48,7 +49,7 @@ class LocationServiceImplTest {
         locationsData.add(location);
         LocationDTO initialLocationDto = locationToLocationDtoConverter.convert(location);
 
-        service.saveLocation(initialLocationDto);
+        service.saveLocation(initialLocationDto, initialLocationDto.getTown().getId());
 
         List<LocationDTO> locations = service.getLocations();
 
@@ -65,9 +66,10 @@ class LocationServiceImplTest {
     void saveLocation() {
         Location location = new Location();
         location.setId(1L);
-        service.saveLocation(locationToLocationDtoConverter.convert(location));
+        LocationDTO locationDTO = locationToLocationDtoConverter.convert(location);
+        service.saveLocation(locationDTO, locationDTO.getTown().getId());
 
-        LocationDTO locationReturned = service.saveLocation(locationToLocationDtoConverter.convert(location));
+        LocationDTO locationReturned = service.saveLocation(locationDTO, locationDTO.getTown().getId());
 
         assertNotNull(locationReturned, "Null location returned");
         assertEquals(1L, locationReturned.getId());
@@ -79,7 +81,8 @@ class LocationServiceImplTest {
         Long idToDelete = 3L;
         Location location = new Location();
         location.setId(idToDelete);
-        service.saveLocation(locationToLocationDtoConverter.convert(location));
+        LocationDTO locationDTO = locationToLocationDtoConverter.convert(location);
+        service.saveLocation(locationDTO, locationDTO.getTown().getId());
 
         //when
         service.deleteById(idToDelete);

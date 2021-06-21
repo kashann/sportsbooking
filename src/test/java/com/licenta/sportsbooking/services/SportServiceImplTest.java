@@ -1,6 +1,7 @@
 package com.licenta.sportsbooking.services;
 
 import com.licenta.sportsbooking.converters.LocationToLocationDtoConverter;
+import com.licenta.sportsbooking.dto.LocationDTO;
 import com.licenta.sportsbooking.dto.SportDTO;
 import com.licenta.sportsbooking.model.Location;
 import com.licenta.sportsbooking.model.Sport;
@@ -44,13 +45,14 @@ class SportServiceImplTest {
         sport.setEndDate(LocalDate.of(2022, 1, 1));
         sport.setLocation(location);
 
-        locationService.saveLocation(locationToLocationDtoConverter.convert(location));
+        LocationDTO locationDTO = locationToLocationDtoConverter.convert(location);
+        locationService.saveLocation(locationDTO, locationDTO.getTown().getId());
 
         List<String> sportTypes = new ArrayList<>();
         sportTypes.add(sportType.name());
 
         List<SportDTO> sportsReturned = sportService
-                .findSportsByLocationNameAndPeriod(Objects.requireNonNull(locationToLocationDtoConverter.convert(location)), sportTypes,
+                .findSportsByLocationNameAndPeriod(Objects.requireNonNull(locationDTO), sportTypes,
                 LocalDate.of(2021, 6, 20), LocalDate.of(2021, 6, 24));
         assertFalse(sportsReturned.isEmpty());
         SportDTO sportReturned = sportsReturned.iterator().next();

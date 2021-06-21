@@ -87,7 +87,7 @@ public class LocationController {
         if (result.hasErrors()) {
             return VIEWS_LOCATION_CREATE_OR_UPDATE_FORM;
         } else {
-            LocationDTO savedLocation = locationService.saveLocation(location);
+            LocationDTO savedLocation = locationService.saveLocation(location, location.getTown().getId());
             return "redirect:/locations/" + savedLocation.getId();
         }
     }
@@ -105,7 +105,7 @@ public class LocationController {
         if (result.hasErrors()) {
             return VIEWS_LOCATION_CREATE_OR_UPDATE_FORM;
         } else {
-            LocationDTO savedLocation = locationService.saveLocation(location);
+            LocationDTO savedLocation = locationService.modifyLocation(location, locationId);
             return "redirect:/locations/" + savedLocation.getId();
         }
     }

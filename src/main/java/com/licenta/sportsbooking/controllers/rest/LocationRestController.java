@@ -36,7 +36,7 @@ public class LocationRestController {
     @PostMapping("/new")
     @ResponseStatus(HttpStatus.CREATED)
     public LocationDTO addLocation(@Valid @RequestBody LocationDTO location) {
-        return locationService.saveLocation(location);
+        return locationService.saveLocation(location, location.getTown().getId());
     }
 
     @PutMapping("/{id}")

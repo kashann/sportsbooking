@@ -1,8 +1,5 @@
 <html xmlns:th="https://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'locations')}">
-<head>
-    <link rel="stylesheet" th:href="@{/resources/css/bootstrap-datepicker3.css}"/>
-    <link rel="stylesheet" th:href="@{/resources/css/bootstrap-datepicker3.standalone.css}"/>
-</head>
+
 <body>
 
 <h2 th:with="text=${location['new']} ? #{location.add.title} : #{location.update.title}" th:text="${text}">Add location</h2>
@@ -10,36 +7,40 @@
     <div class="form-group has-feedback">
         <input th:replace="~{fragments/inputField :: input ('', 'id', 'hidden', '')}"/>
         <input th:replace="~{fragments/inputField :: input (#{location.details.name}, 'name', 'text', '')}" />
+        <input th:replace="~{fragments/inputField :: input ('', 'town.id', 'hidden', '')}"/>
         <input th:replace="~{fragments/inputField :: input (#{location.details.town}, 'town.name', 'hidden', '')}"/>
-        <th:block th:each="sport,sportStat: *{sports}">
-            <hr/>
-            <input th:replace="~{fragments/inputField :: input ('', 'sports[__${sportStat.index}__].id', 'hidden', '')}" />
-            <input th:replace="~{fragments/inputField :: input (#{location.details.sports.name}, 'sports[__${sportStat.index}__].name', 'sports', ${sportValues})}" />
-            <input th:replace="~{fragments/inputField :: input (#{location.details.sports.startDate}, 'sports[__${sportStat.index}__].startDate', 'date', '')}" />
-            <input th:replace="~{fragments/inputField :: input (#{location.details.sports.endDate}, 'sports[__${sportStat.index}__].endDate', 'date', '')}" />
-            <input th:replace="~{fragments/inputField :: input (#{location.details.sports.avgPrice}, 'sports[__${sportStat.index}__].avgCostPerDay', 'numeric', '')}" />
-        </th:block>
+        <table class="table table-striped">
+            <tr>
+                <th th:text="#{location.details.sports}">Sports</th>
+                <td th:text="#{location.details.sports.name}">Name</td>
+                <td th:text="#{location.details.sports.startDate}">Start date</td>
+                <td th:text="#{location.details.sports.endDate}">End date</td>
+                <td th:text="#{location.details.sports.avgPrice}">Avg. price</td>
+                <td th:text="#{actions}">Actions</td>
+            </tr>
+            <tr th:each="sport: *{sports}">
+                <th/>
+                <td th:text="${sport.name}" />
+                <td th:text="${#temporals.format(sport.startDate, 'dd.MM.yyyy')}" />
+                <td th:text="${#temporals.format(sport.endDate, 'dd.MM.yyyy')}" />
+                <td th:text="#{priceAndCurrency(${sport.avgCostPerDay})}" />
+                <td>
+                    <a th:href="@{/locations/__${location.id}__/sports/__${sport.id}__/edit}" th:text="#{update}"/></a>
+                    <a th:href="@{/locations/__${location.id}__/sports/__${sport.id}__/delete}" th:text="#{delete}"/></a>
+                </td>
+            </tr>
+            <tr>
+                <a th:href="@{/locations/__${location.id}__/sports/new}" th:text="#{sport.add.title}"/></a>
+            </tr>
+        </table>
     </div>
     <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-10">
+        <div class="col-sm-offset-3 col-sm-9">
             <button th:with="text=${location['new']} ? #{location.add.title} : #{location.update.title}"
                     class="btn btn-default" type="submit" th:text="${text}">Add Location</button>
         </div>
     </div>
 </form>
-<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
-<script th:src="@{/webjars/jquery-ui/jquery-ui.min.js}"></script>
-<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
-<script th:src="@{/resources/js/bootstrap-datepicker.js}"></script>
-<script>
-    $('.input-dp').datepicker({
-        format: "dd.mm.yyyy",
-        weekStart: 1,
-        startDate: 0,
-        maxViewMode: 2,
-        todayHighlight: true,
-        autoclose: true
-    });
-</script>
+
 </body>
 </html>

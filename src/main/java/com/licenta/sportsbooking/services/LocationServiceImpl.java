@@ -10,6 +10,7 @@ import com.licenta.sportsbooking.exceptions.NotFoundException;
 import com.licenta.sportsbooking.model.Location;
 import com.licenta.sportsbooking.model.SportType;
 import com.licenta.sportsbooking.repositories.LocationRepository;
+import com.licenta.sportsbooking.repositories.TownRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -32,6 +32,7 @@ public class LocationServiceImpl implements LocationService {
     private final LocationDtoToLocationConverter locationDtoToLocationConverter;
     private final LocationToLocationDtoConverter locationToLocationDtoConverter;
     private final SportServiceImpl sportService;
+    private final TownRepository townRepository;
 
     @Override
     public LocationDTO findById(Long id) {
@@ -54,9 +55,9 @@ public class LocationServiceImpl implements LocationService {
 
     @Override
     @Transactional
-    public LocationDTO saveLocation(LocationDTO locationDTO) {
+    public LocationDTO saveLocation(LocationDTO locationDTO, Long townId) {
         Location detachedLocation = locationDtoToLocationConverter.convert(locationDTO);
-
+        detachedLocation.setTown(townRepository.getOne(townId));
         Location savedLocation = locationRepository.save(detachedLocation);
         log.debug("Saved Location Id: " + savedLocation.getId());
         return locationToLocationDtoConverter.convert(savedLocation);
@@ -64,17 +65,16 @@ public class LocationServiceImpl implements LocationService {
 
     @Override
     @Transactional
-    public LocationDTO modifyLocation(LocationDTO locationDTO, Long id) {
-        LocationDTO existingLocation = findById(id);
+    public LocationDTO modifyLocation(LocationDTO locationDTO, Long townId) {
+        LocationDTO existingLocation = findById(locationDTO.getId());
         if (existingLocation != null) {
             existingLocation.setName(locationDTO.getName());
             existingLocation.setTown(locationDTO.getTown());
             existingLocation.setSports(locationDTO.getSports());
-            return saveLocation(existingLocation);
+            return saveLocation(existingLocation, townId);
         }
         else {
-            locationDTO.setId(id);
-            return saveLocation(locationDTO);
+            return saveLocation(locationDTO, townId);
         }
     }
 

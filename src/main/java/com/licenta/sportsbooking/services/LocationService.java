@@ -8,8 +8,8 @@ public interface LocationService {
 
     LocationDTO findById(Long id);
     List<LocationDTO> getLocations();
-    LocationDTO saveLocation(LocationDTO locationDTO);
-    LocationDTO modifyLocation(LocationDTO locationDTO, Long id);
+    LocationDTO saveLocation(LocationDTO locationDTO, Long townId);
+    LocationDTO modifyLocation(LocationDTO locationDTO, Long townId);
     void deleteById(Long id);
 
 }

@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class LocationDtoToLocationConverter implements Converter<LocationDTO, Location> {
 
-    private final TownDtoToTownConverter townConverter;
     private final SportDtoToSportConverter sportConverter;
 
     @Synchronized
@@ -26,7 +25,6 @@ public class LocationDtoToLocationConverter implements Converter<LocationDTO, Lo
         final Location location = new Location();
         location.setId(source.getId());
         location.setName(source.getName());
-        location.setTown(townConverter.convert(source.getTown()));
 
         if (source.getSports() != null && source.getSports().size() > 0) {
             source.getSports()

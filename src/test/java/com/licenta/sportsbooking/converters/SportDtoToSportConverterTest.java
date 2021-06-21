@@ -39,7 +39,7 @@ class SportDtoToSportConverterTest {
         //given
         SportDTO sportDTO = new SportDTO();
         sportDTO.setId(ID_VALUE);
-        sportDTO.setName(NAME);
+        sportDTO.setName(NAME.name());
         sportDTO.setStartDate(START);
         sportDTO.setEndDate(END);
         sportDTO.setAvgCostPerDay(PRICE);

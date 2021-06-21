@@ -98,7 +98,7 @@ class LocationRestControllerTest {
         location.setId(2L);
         location.setName("POST Test");
 
-        when(service.saveLocation(location)).thenReturn(location);
+        when(service.saveLocation(location, location.getTown().getId())).thenReturn(location);
 
         mockMvc.perform(post("/api/locations/new")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -124,12 +124,12 @@ class LocationRestControllerTest {
         town.setName("Town");
         location.setTown(town);
         SportDTO sport1 = new SportDTO();
-        sport1.setName(SportType.SKI);
+        sport1.setName(SportType.SKI.name());
         sport1.setAvgCostPerDay(150.0);
         sport1.setStartDate(LocalDate.of(2020,12,15));
         sport1.setEndDate(LocalDate.of(2021, 4, 15));
         SportDTO sport2 = new SportDTO();
-        sport2.setName(SportType.SNOWBOARDING);
+        sport2.setName(SportType.SNOWBOARDING.name());
         sport2.setAvgCostPerDay(130.0);
         sport2.setStartDate(LocalDate.of(2020,12,15));
         sport2.setEndDate(LocalDate.of(2021, 4, 15));
@@ -164,7 +164,7 @@ class LocationRestControllerTest {
         location.setName("Bunloc");
         List<SportDTO> sportDTOS = new ArrayList<>();
         SportDTO dh = new SportDTO();
-        dh.setName(SportType.DOWNHILL);
+        dh.setName(SportType.DOWNHILL.name());
         dh.setAvgCostPerDay(20.0);
         dh.setStartDate(LocalDate.of(2020, 4, 1));
         dh.setEndDate(LocalDate.of(2020, 11, 1));
