@@ -27,7 +27,7 @@ public class Location {
     @JoinColumn(name = "town_id")
     private Town town;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "location")
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, mappedBy = "location")
     private List<Sport> sports = new ArrayList<>();
 
     public void setTown(Town town) {

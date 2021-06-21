@@ -63,6 +63,12 @@ public class SportServiceImpl implements SportService {
     }
 
     @Override
+    public void deleteById(Long id) {
+        log.debug("Deleting Sport Id: " + id);
+        sportRepository.deleteById(id);
+    }
+
+    @Override
     public List<SportDTO> findSportsByLocationNameAndPeriod(LocationDTO location, List<String> sportNames, LocalDate from, LocalDate to) {
         List<Sport> sports = sportRepository.findByLocationId(location.getId());
         List<SportDTO> result = new ArrayList<>();

@@ -40,12 +40,12 @@ public class SportController {
             return VIEWS_SPORT_CREATE_OR_UPDATE_FORM;
         } else {
             sportService.saveSport(sport, locationId);
-            return "redirect:/locations/" + locationId;
+            return "redirect:/locations/" + locationId + "/edit";
         }
     }
 
     @GetMapping("/locations/{locationId}/sports/{id}/edit")
-    public String initUpdateOwnerForm(@PathVariable("id") Long sportId, Model model) {
+    public String initUpdateSportForm(@PathVariable("id") Long sportId, Model model) {
         List<String> sports = SportType.getAllNames();
         model.addAttribute("sportValues", sports);
         model.addAttribute("sport", sportService.findById(sportId));
@@ -53,12 +53,18 @@ public class SportController {
     }
 
     @PostMapping("/locations/{locationId}/sports/{id}/edit")
-    public String processUpdateOwnerForm(@PathVariable("locationId") Long locationId, @Valid SportDTO sport, BindingResult result) {
+    public String processUpdateSportForm(@PathVariable("locationId") Long locationId, @Valid SportDTO sport, BindingResult result) {
         if (result.hasErrors()) {
             return VIEWS_SPORT_CREATE_OR_UPDATE_FORM;
         } else {
             sportService.modifySport(sport, locationId);
-            return "redirect:/locations/" + locationId;
+            return "redirect:/locations/" + locationId + "/edit";
         }
+    }
+
+    @GetMapping("/locations/{locationId}/sports/{id}/delete")
+    public String processDeleteSport(@PathVariable("locationId") Long locationId, @PathVariable("id") Long sportId) {
+        sportService.deleteById(sportId);
+        return "redirect:/locations/" + locationId + "/edit";
     }
 }

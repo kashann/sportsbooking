@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
-import java.time.LocalDate;
 import java.util.List;
 
 @Slf4j
@@ -93,7 +92,7 @@ public class LocationController {
     }
 
     @GetMapping("/{id}/edit")
-    public String initUpdateOwnerForm(@PathVariable("id") Long locationId, Model model) {
+    public String initUpdateLocationForm(@PathVariable("id") Long locationId, Model model) {
         List<String> sports = SportType.getAllNames();
         model.addAttribute("sportValues", sports);
         model.addAttribute("location", locationService.findById(locationId));
@@ -101,13 +100,19 @@ public class LocationController {
     }
 
     @PostMapping("/{id}/edit")
-    public String processUpdateOwnerForm(@Valid LocationDTO location, BindingResult result, @PathVariable("id") Long locationId) {
+    public String processUpdateLocationForm(@Valid LocationDTO location, BindingResult result, @PathVariable("id") Long locationId) {
         if (result.hasErrors()) {
             return VIEWS_LOCATION_CREATE_OR_UPDATE_FORM;
         } else {
             LocationDTO savedLocation = locationService.modifyLocation(location, locationId);
             return "redirect:/locations/" + savedLocation.getId();
         }
+    }
+
+    @GetMapping("/{id}/delete")
+    public String processDeleteLocationForm(@PathVariable("id") Long locationId) {
+        locationService.deleteById(locationId);
+        return "redirect:/locations";
     }
 
 }
