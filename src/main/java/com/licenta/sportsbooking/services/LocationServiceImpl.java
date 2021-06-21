@@ -13,6 +13,7 @@ import com.licenta.sportsbooking.repositories.LocationRepository;
 import com.licenta.sportsbooking.repositories.TownRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,6 +34,9 @@ public class LocationServiceImpl implements LocationService {
     private final LocationToLocationDtoConverter locationToLocationDtoConverter;
     private final SportServiceImpl sportService;
     private final TownRepository townRepository;
+
+    @Value("${search.locations.return.withNoSports}")
+    private boolean returnSearchResultsEvenIfNoSportsAreAllocated;
 
     @Override
     public LocationDTO findById(Long id) {
@@ -123,7 +127,7 @@ public class LocationServiceImpl implements LocationService {
                 }
             }
 
-            if (sportSearchResults.size() > 0) {
+            if (returnSearchResultsEvenIfNoSportsAreAllocated || sportSearchResults.size() > 0) {
                 SearchResultDTO resultDTO = new SearchResultDTO(
                         locationDTO.getId(),
                         locationDTO.getName(),

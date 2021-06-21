@@ -7,6 +7,7 @@ import com.licenta.sportsbooking.dto.SportDTO;
 import com.licenta.sportsbooking.model.Location;
 import com.licenta.sportsbooking.model.SportType;
 import com.licenta.sportsbooking.services.LocationServiceImpl;
+import com.licenta.sportsbooking.services.TownServiceImpl;
 import com.licenta.sportsbooking.utils.LangMsg;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,6 +35,7 @@ public class LocationController {
     private final static String VIEWS_LOCATION_CREATE_OR_UPDATE_FORM = "locations/addOrEditLocation";
 
     private final LocationServiceImpl locationService;
+    private final TownServiceImpl townService;
 
     @GetMapping("/search")
     public ModelAndView searchLocation() {
@@ -77,6 +79,7 @@ public class LocationController {
     public String initCreationForm(Model model) {
         List<String> sports = SportType.getAllNames();
         model.addAttribute("sportValues", sports);
+        model.addAttribute("townsValues", townService.getTowns());
         model.addAttribute("location", new LocationDTO());
         return VIEWS_LOCATION_CREATE_OR_UPDATE_FORM;
     }
@@ -104,7 +107,7 @@ public class LocationController {
         if (result.hasErrors()) {
             return VIEWS_LOCATION_CREATE_OR_UPDATE_FORM;
         } else {
-            LocationDTO savedLocation = locationService.modifyLocation(location, locationId);
+            LocationDTO savedLocation = locationService.modifyLocation(location, location.getTown().getId());
             return "redirect:/locations/" + savedLocation.getId();
         }
     }

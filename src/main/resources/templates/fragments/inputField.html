@@ -2,7 +2,7 @@
 
 <body>
 <form>
-    <th:block th:fragment="input (label, name, type, sports)">
+    <th:block th:fragment="input (label, name, type, objects)">
         <div th:with="valid=${!#fields.hasErrors(name)}"
              th:class="${'form-group' + (valid ? '' : ' has-error')}"
              class="form-group">
@@ -15,9 +15,15 @@
                     <input th:case="'numeric'" min="0" step='0.01' class="form-control" type="number" th:field="*{__${name}__}" />
                     <input th:case="'date'" class="input-dp form-control" type="text" autocomplete="off" th:field="*{__${name}__}" />
                     <select th:case="'sports'" th:field="*{__${name}__}">
-                        <option th:each="sportValue : ${sports}"
+                        <option th:each="sportValue : ${objects}"
                                 th:value="${sportValue}"
                                 th:text="${sportValue}">
+                        </option>
+                    </select>
+                    <select th:case="'towns'" th:field="*{__${name}__}">
+                        <option th:each="town : ${objects}"
+                                th:value="${town.id}"
+                                th:text="${town.name}">
                         </option>
                     </select>
                 </div>

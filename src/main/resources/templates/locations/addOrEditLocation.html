@@ -7,32 +7,37 @@
     <div class="form-group has-feedback">
         <input th:replace="~{fragments/inputField :: input ('', 'id', 'hidden', '')}"/>
         <input th:replace="~{fragments/inputField :: input (#{location.details.name}, 'name', 'text', '')}" />
-        <input th:replace="~{fragments/inputField :: input ('', 'town.id', 'hidden', '')}"/>
-        <input th:replace="~{fragments/inputField :: input (#{location.details.town}, 'town.name', 'hidden', '')}"/>
-        <table class="table table-striped">
-            <tr>
-                <th th:text="#{location.details.sports}">Sports</th>
-                <td th:text="#{location.details.sports.name}">Name</td>
-                <td th:text="#{location.details.sports.startDate}">Start date</td>
-                <td th:text="#{location.details.sports.endDate}">End date</td>
-                <td th:text="#{location.details.sports.avgPrice}">Avg. price</td>
-                <td th:text="#{actions}">Actions</td>
-            </tr>
-            <tr th:each="sport: *{sports}">
-                <th/>
-                <td th:text="${sport.name}" />
-                <td th:text="${#temporals.format(sport.startDate, 'dd.MM.yyyy')}" />
-                <td th:text="${#temporals.format(sport.endDate, 'dd.MM.yyyy')}" />
-                <td th:text="#{priceAndCurrency(${sport.avgCostPerDay})}" />
-                <td>
-                    <a th:href="@{/locations/__${location.id}__/sports/__${sport.id}__/edit}" th:text="#{update}"/></a>
-                    <a th:href="@{/locations/__${location.id}__/sports/__${sport.id}__/delete}" th:text="#{delete}"/></a>
-                </td>
-            </tr>
-            <tr>
-                <a th:href="@{/locations/__${location.id}__/sports/new}" th:text="#{sport.add.title}"/></a>
-            </tr>
-        </table>
+        <th:block th:if="${location['new']}">
+            <input th:replace="~{fragments/inputField :: input (#{location.details.town}, 'town.id', 'towns', ${townsValues})}"/>
+        </th:block>
+        <th:block th:unless="${location['new']}">
+            <input th:replace="~{fragments/inputField :: input ('', 'town.id', 'hidden', '')}"/>
+            <input th:replace="~{fragments/inputField :: input (#{location.details.town}, 'town.name', 'hidden', '')}"/>
+            <table class="table table-striped">
+                <tr>
+                    <th th:text="#{location.details.sports}">Sports</th>
+                    <td th:text="#{location.details.sports.name}">Name</td>
+                    <td th:text="#{location.details.sports.startDate}">Start date</td>
+                    <td th:text="#{location.details.sports.endDate}">End date</td>
+                    <td th:text="#{location.details.sports.avgPrice}">Avg. price</td>
+                    <td th:text="#{actions}">Actions</td>
+                </tr>
+                <tr th:each="sport: *{sports}">
+                    <th/>
+                    <td th:text="${sport.name}" />
+                    <td th:text="${#temporals.format(sport.startDate, 'dd.MM.yyyy')}" />
+                    <td th:text="${#temporals.format(sport.endDate, 'dd.MM.yyyy')}" />
+                    <td th:text="#{priceAndCurrency(${sport.avgCostPerDay})}" />
+                    <td>
+                        <a th:href="@{/locations/__${location.id}__/sports/__${sport.id}__/edit}" th:text="#{update}"/></a>
+                        <a th:href="@{/locations/__${location.id}__/sports/__${sport.id}__/delete}" th:text="#{delete}"/></a>
+                    </td>
+                </tr>
+                <tr>
+                    <a th:href="@{/locations/__${location.id}__/sports/new}" th:text="#{sport.add.title}"/></a>
+                </tr>
+            </table>
+        </th:block>
     </div>
     <div class="form-group">
         <div class="col-sm-offset-3 col-sm-9">

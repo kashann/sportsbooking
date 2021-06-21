@@ -75,7 +75,7 @@ class LocationRestControllerTest {
         mockMvc.perform(get("/api/locations"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(content().json("{\"locations\":[{\"id\":1,\"name\":\"Test1\"}, {\"id\":2,\"name\":\"Test2\"}]}"));
+                .andExpect(content().json("[{\"id\":1,\"name\":\"Test1\"}, {\"id\":2,\"name\":\"Test2\"}]"));
     }
 
     @Test
@@ -181,6 +181,5 @@ class LocationRestControllerTest {
                 "&from=2020-06-01&to=2020-06-10&sort=ASC"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
-//                .andExpect(content().json("{\"locationName\":\"Bunloc\",\"sports\":[{\"id\":1,\"name\":\"DOWNHILL\",\"startDate\":[2020,4,1],\"endDate\":[2020,11,1],\"avgCostPerDay\":20}]}"));
     }
 }
