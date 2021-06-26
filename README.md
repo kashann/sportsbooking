@@ -28,9 +28,14 @@ Every location returned in the above-mentioned list contains the name, the sport
 * Hit RUN
 
 -----------------------------------
+## View DataBase
+
+Navigate to `http://localhost:9090/h2-console/`
+
+-----------------------------------
 ## Web MVC testing
 
-Navigate to `http://localhost:8080/`
+Navigate to `http://localhost:9090/`
 
 -----------------------------------
 
@@ -42,145 +47,135 @@ Navigate to `http://localhost:8080/`
    ```
    Response:
    ```
-   {
-       "locations": [
-           {
-               "id": 1,
-               "name": "Predeal slope",
-               "town": {
-                   "id": 2,
-                   "name": "Predeal"
-               },
-               "sports": [
-                   {
-                       "id": 3,
-                       "name": "ATV",
-                       "startDate": [
-                           2020,
-                           1,
-                           1
-                       ],
-                       "endDate": [
-                           2021,
-                           1,
-                           1
-                       ],
-                       "avgCostPerDay": 200.0
-                   },
-                   {
-                       "id": 5,
-                       "name": "SNOWBOARDING",
-                       "startDate": [
-                           2020,
-                           12,
-                           1
-                       ],
-                       "endDate": [
-                           2021,
-                           3,
-                           1
-                       ],
-                       "avgCostPerDay": 160.0
-                   },
-                   {
-                       "id": 1,
-                       "name": "SKI",
-                       "startDate": [
-                           2020,
-                           12,
-                           1
-                       ],
-                       "endDate": [
-                           2021,
-                           3,
-                           1
-                       ],
-                       "avgCostPerDay": 180.0
-                   }
-               ]
-           },
-           {
-               "id": 2,
-               "name": "Bunloc",
-               "town": {
-                   "id": 1,
-                   "name": "Sacele"
-               },
-               "sports": [
-                   {
-                       "id": 2,
-                       "name": "PARAGLIDING",
-                       "startDate": [
-                           2020,
-                           5,
-                           1
-                       ],
-                       "endDate": [
-                           2020,
-                           9,
-                           1
-                       ],
-                       "avgCostPerDay": 260.0
-                   },
-                   {
-                       "id": 4,
-                       "name": "DOWNHILL",
-                       "startDate": [
-                           2020,
-                           4,
-                           1
-                       ],
-                       "endDate": [
-                           2020,
-                           11,
-                           1
-                       ],
-                       "avgCostPerDay": 20.0
-                   }
-               ]
-           },
-           {
-               "id": 3,
-               "name": "Angertal",
-               "town": {
-                   "id": 3,
-                   "name": "Bad Hofgastein"
-               },
-               "sports": [
-                   {
-                       "id": 6,
-                       "name": "SKI",
-                       "startDate": [
-                           2020,
-                           12,
-                           19
-                       ],
-                       "endDate": [
-                           2021,
-                           4,
-                           2
-                       ],
-                       "avgCostPerDay": 320.0
-                   },
-                   {
-                       "id": 7,
-                       "name": "SNOWBOARDING",
-                       "startDate": [
-                           2020,
-                           12,
-                           19
-                       ],
-                       "endDate": [
-                           2021,
-                           4,
-                           2
-                       ],
-                       "avgCostPerDay": 290.0
-                   }
-               ]
-           }
-       ]
-   }
+    [
+        {
+            "id": 1,
+            "name": "Cabana Susai",
+            "town": {
+                "id": 3,
+                "name": "Predeal"
+            },
+            "sports": [
+                {
+                    "id": 1,
+                    "name": "SKI",
+                    "startDate": "2021-12-01",
+                    "endDate": "2022-03-01",
+                    "avgCostPerDay": 180.0
+                },
+                {
+                    "id": 3,
+                    "name": "ATV",
+                    "startDate": "2021-01-01",
+                    "endDate": "2022-01-01",
+                    "avgCostPerDay": 200.0
+                },
+                {
+                    "id": 5,
+                    "name": "SNOWBOARDING",
+                    "startDate": "2021-12-01",
+                    "endDate": "2022-03-01",
+                    "avgCostPerDay": 160.0
+                },
+                {
+                    "id": 11,
+                    "name": "SKI",
+                    "startDate": "2021-06-01",
+                    "endDate": "2021-07-11",
+                    "avgCostPerDay": 123.4
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "name": "Bunloc",
+            "town": {
+                "id": 4,
+                "name": "Sacele"
+            },
+            "sports": [
+                {
+                    "id": 2,
+                    "name": "PARAGLIDING",
+                    "startDate": "2021-05-01",
+                    "endDate": "2021-09-01",
+                    "avgCostPerDay": 260.0
+                },
+                {
+                    "id": 4,
+                    "name": "DOWNHILL",
+                    "startDate": "2021-04-01",
+                    "endDate": "2021-11-01",
+                    "avgCostPerDay": 20.0
+                }
+            ]
+        },
+        {
+            "id": 3,
+            "name": "Angertal",
+            "town": {
+                "id": 5,
+                "name": "Bad Hofgastein"
+            },
+            "sports": [
+                {
+                    "id": 6,
+                    "name": "SKI",
+                    "startDate": "2021-12-19",
+                    "endDate": "2022-04-02",
+                    "avgCostPerDay": 320.0
+                },
+                {
+                    "id": 7,
+                    "name": "SNOWBOARDING",
+                    "startDate": "2021-12-19",
+                    "endDate": "2022-04-02",
+                    "avgCostPerDay": 290.0
+                }
+            ]
+        },
+        {
+            "id": 4,
+            "name": "TNT Brothers Skydiving",
+            "town": {
+                "id": 2,
+                "name": "Clinceni"
+            },
+            "sports": [
+                {
+                    "id": 8,
+                    "name": "SKYDIVING",
+                    "startDate": "2021-04-01",
+                    "endDate": "2022-10-31",
+                    "avgCostPerDay": 850.0
+                },
+                {
+                    "id": 9,
+                    "name": "PARAGLIDING",
+                    "startDate": "2021-04-01",
+                    "endDate": "2022-10-31",
+                    "avgCostPerDay": 380.0
+                }
+            ]
+        },
+        {
+            "id": 5,
+            "name": "Blue Beach",
+            "town": {
+                "id": 1,
+                "name": "Mamaia"
+            },
+            "sports": [
+                {
+                    "id": 10,
+                    "name": "KITEBOARDING",
+                    "startDate": "2021-06-01",
+                    "endDate": "2022-09-15",
+                    "avgCostPerDay": 250.0
+                }
+            ]
+        }
+    ]
    ```
 
 2. Getting a specific location by its id:
@@ -189,46 +184,30 @@ Navigate to `http://localhost:8080/`
    ```
    Response:
    ```
-   {
-       "id": 2,
-       "name": "Bunloc",
-       "town": {
-           "id": 1,
-           "name": "Sacele"
-       },
-       "sports": [
-           {
-               "id": 2,
-               "name": "PARAGLIDING",
-               "startDate": [
-                   2020,
-                   5,
-                   1
-               ],
-               "endDate": [
-                   2020,
-                   9,
-                   1
-               ],
-               "avgCostPerDay": 260.0
-           },
-           {
-               "id": 4,
-               "name": "DOWNHILL",
-               "startDate": [
-                   2020,
-                   4,
-                   1
-               ],
-               "endDate": [
-                   2020,
-                   11,
-                   1
-               ],
-               "avgCostPerDay": 20.0
-           }
-       ]
-   }
+    {
+        "id": 4,
+        "name": "TNT Brothers Skydiving",
+        "town": {
+            "id": 2,
+            "name": "Clinceni"
+        },
+        "sports": [
+            {
+                "id": 8,
+                "name": "SKYDIVING",
+                "startDate": "2021-04-01",
+                "endDate": "2022-10-31",
+                "avgCostPerDay": 850.0
+            },
+            {
+                "id": 9,
+                "name": "PARAGLIDING",
+                "startDate": "2021-04-01",
+                "endDate": "2022-10-31",
+                "avgCostPerDay": 380.0
+            }
+        ]
+    }
    ```
 
 3. Adding a new location:
@@ -236,108 +215,92 @@ Navigate to `http://localhost:8080/`
    (POST) /api/locations/new
    (requestBody)
    {
-       "name": "TNT Brothers",
+       "name": "Navodari kiteboarding",
        "town": {
-           "name": "Clinceni"
-       },
-       "sports": [
-           {
-               "name": "PARAGLIDING",
-               "startDate": [
-                   2020,
-                   4,
-                   1
-               ],
-               "endDate": [
-                   2020,
-                   10,
-                   1
-               ],
-               "avgCostPerDay": 850.0
-           }
-       ]
+           "id": "1",
+           "name": "Mamaia"
+       }
    }
    ```
    Response:
    ```
    {
-       "id": 4,
-       "name": "TNT Brothers",
+       "id": 6,
+       "name": "Navodari kiteboarding",
        "town": {
-           "id": 4,
-           "name": "Clinceni"
+           "id": 1,
+           "name": "Mamaia"
        },
-       "sports": [
-           {
-               "id": 8,
-               "name": "PARAGLIDING",
-               "startDate": [
-                   2020,
-                   4,
-                   1
-               ],
-               "endDate": [
-                   2020,
-                   10,
-                   1
-               ],
-               "avgCostPerDay": 850.0
-           }
-       ]
+       "sports": []
    }
    ```
 
-4. Updating a specific location (PATCH can also be implemented):
+4. Updating a specific location:
    ```
-   (PUT) /api/locations/4
+   (PUT) /api/locations/1
    (requestBody)
-   {
-       "name": "TNT Brothers Skydiving",
-       "town": {
-           "name": "Tulcea"
-       },
-       "sports": [
-           {
-               "name": "SKYDIVING",
-               "startDate": [
-                   2020,
-                   4,
-                   1
-               ],
-               "endDate": [
-                   2020,
-                   10,
-                   1
-               ],
-               "avgCostPerDay": 850.0
-           }
-       ]
-   }
+    {
+        "id": 1,
+        "name": "Predeal Slope",
+        "town": {
+            "id": 3,
+            "name": "Predeal"
+        },
+        "sports": [
+            {
+                "id": 1,
+                "name": "SKI",
+                "startDate": "2021-12-01",
+                "endDate": "2022-03-01",
+                "avgCostPerDay": 180.0
+            },
+            {
+                "id": 3,
+                "name": "ATV",
+                "startDate": "2021-01-01",
+                "endDate": "2022-01-01",
+                "avgCostPerDay": 200.0
+            },
+            {
+                "id": 5,
+                "name": "SNOWBOARDING",
+                "startDate": "2021-12-01",
+                "endDate": "2022-03-01",
+                "avgCostPerDay": 160.0
+            }
+        ]
+    }
    ```
    Response:
    ```
    {
-       "id": 4,
-       "name": "TNT Brothers Skydiving",
+       "id": 1,
+       "name": "Predeal Slope",
        "town": {
-           "id": 5,
-           "name": "Tulcea"
+           "id": 1,
+           "name": "Mamaia"
        },
        "sports": [
            {
-               "id": 9,
-               "name": "SKYDIVING",
-               "startDate": [
-                   2020,
-                   4,
-                   1
-               ],
-               "endDate": [
-                   2020,
-                   10,
-                   1
-               ],
-               "avgCostPerDay": 850.0
+               "id": 1,
+               "name": "SKI",
+               "startDate": "2021-12-01",
+               "endDate": "2022-03-01",
+               "avgCostPerDay": 180.0
+           },
+           {
+               "id": 3,
+               "name": "ATV",
+               "startDate": "2021-01-01",
+               "endDate": "2022-01-01",
+               "avgCostPerDay": 200.0
+           },
+           {
+               "id": 5,
+               "name": "SNOWBOARDING",
+               "startDate": "2021-12-01",
+               "endDate": "2022-03-01",
+               "avgCostPerDay": 160.0
            }
        ]
    }
@@ -348,163 +311,182 @@ Navigate to `http://localhost:8080/`
    (DELETE) /api/locations/4
    ```
 
-6. Searching for locations based on 1 sport and a period:
+6. Get a sport by its ID:
    ```
-   (GET) /api/locations/search?sports=DOWNHILL&from=2021-10-01&to=2021-10-15
-   ```
-   Response:
-   ```
-   [
-       {
-           "locationName": "Bunloc",
-           "sports": [
-               {
-                   "id": 4,
-                   "name": "DOWNHILL",
-                   "startDate": [
-                       2021,
-                       4,
-                       1
-                   ],
-                   "endDate": [
-                       2021,
-                       11,
-                       1
-                   ],
-                   "avgCostPerDay": 20.0
-               }
-           ]
-       }
-   ]
-   ```
-
-7. Searching for locations based on 2 or more sports and a period:
-   ```
-   (GET) /api/locations/search?sports=DOWNHILL,ATV&from=2021-10-01&to=2021-10-15
+   (GET) /api/locations/5/sports/10
    ```
    Response:
    ```
-   [
-       {
-           "locationName": "Predeal slope",
-           "sports": [
-               {
-                   "id": 3,
-                   "name": "ATV",
-                   "startDate": [
-                       2021,
-                       1,
-                       1
-                   ],
-                   "endDate": [
-                       2021,
-                       1,
-                       1
-                   ],
-                   "avgCostPerDay": 200.0
-               }
-           ]
-       },
-       {
-           "locationName": "Bunloc",
-           "sports": [
-               {
-                   "id": 4,
-                   "name": "DOWNHILL",
-                   "startDate": [
-                       2020,
-                       4,
-                       1
-                   ],
-                   "endDate": [
-                       2020,
-                       11,
-                       1
-                   ],
-                   "avgCostPerDay": 20.0
-               }
-           ]
-       }
-   ]
-   ```
-
-8. Searching for locations based on 2 or more sports, a period and sorting descending by avg price (ascending also possible):
-   ```    
-   (GET) /api/locations/search?sports=SKI,SNOWBOARDING&from=2021-01-10&to=2021-01-15&sort=DESC
-   ```
-   Response:
-   ```
-   [
-       {
-           "locationName": "Angertal",
-           "sports": [
-               {
-                   "id": 6,
-                   "name": "SKI",
-                   "startDate": [
-                       2020,
-                       12,
-                       19
-                   ],
-                   "endDate": [
-                       2021,
-                       4,
-                       2
-                   ],
-                   "avgCostPerDay": 320.0
-               },
-               {
-                   "id": 7,
-                   "name": "SNOWBOARDING",
-                   "startDate": [
-                       2020,
-                       12,
-                       19
-                   ],
-                   "endDate": [
-                       2021,
-                       4,
-                       2
-                   ],
-                   "avgCostPerDay": 290.0
-               }
-           ]
-       },
-       {
-           "locationName": "Predeal slope",
-           "sports": [
-               {
-                   "id": 1,
-                   "name": "SKI",
-                   "startDate": [
-                       2020,
-                       12,
-                       1
-                   ],
-                   "endDate": [
-                       2021,
-                       3,
-                       1
-                   ],
-                   "avgCostPerDay": 180.0
-               },
-               {
-                   "id": 5,
-                   "name": "SNOWBOARDING",
-                   "startDate": [
-                       2020,
-                       12,
-                       1
-                   ],
-                   "endDate": [
-                       2021,
-                       3,
-                       1
-                   ],
-                   "avgCostPerDay": 160.0
-               }
-           ]
-       }
-   ]
+    {
+        "id": 10,
+        "name": "KITEBOARDING",
+        "startDate": "2021-06-01",
+        "endDate": "2022-09-15",
+        "avgCostPerDay": 250.0
+    }
    ```
    
+7. Add a new sport to a location:
+   ```
+   (POST) /api/locations/5/sports/new
+   (requestBody)
+   {
+       "id": null,
+       "name": "PARAGLIDING",
+       "startDate": "2021-07-01",
+       "endDate": "2022-10-15",
+       "avgCostPerDay": 350.0
+   }
+   ```
+   Response:
+   ```
+    {
+        "id": 11,
+        "name": "PARAGLIDING",
+        "startDate": "2021-07-01",
+        "endDate": "2022-10-15",
+        "avgCostPerDay": 350.0
+    }
+   ```
+   
+8. Modifying a sport:
+   ```
+   (PUT) /api/locations/5/sports/10
+   (requestBody)
+    {
+        "id": 10,
+        "name": "KITEBOARDING",
+        "startDate": "2021-06-15",
+        "endDate": "2022-09-30",
+        "avgCostPerDay": 280.0
+    }
+   ```
+   Response:
+   ```
+    {
+        "id": 10,
+        "name": "KITEBOARDING",
+        "startDate": "2021-06-15",
+        "endDate": "2022-09-30",
+        "avgCostPerDay": 280.0
+    }
+   ```
+   
+9. Removing a specific sport:
+   ```
+   (DELETE) /api/locations/5/sports/10
+   ```
+   
+10. Searching for locations based on 1 sport and a period:
+    ```
+    (GET) /api/locations/search?sports=DOWNHILL&from=2021-10-01&to=2021-10-15
+    ```
+    Response:
+    ```
+    [
+        {
+            "id": 2,
+            "locationName": "Bunloc",
+            "townName": "Sacele",
+            "sports": [
+                {
+                    "id": 4,
+                    "name": "DOWNHILL",
+                    "startDate": "2021-04-01",
+                    "endDate": "2021-11-01",
+                    "avgCostPerDay": 20.0
+                }
+            ]
+        }
+    ]
+    ```
+
+11. Searching for locations based on 2 or more sports and a period:
+    ```
+    (GET) /api/locations/search?sports=DOWNHILL,ATV&from=2021-10-01&to=2021-10-15
+    ```
+    Response:
+    ```
+    [
+        {
+            "id": 1,
+            "locationName": "Cabana Susai",
+            "townName": "Predeal",
+            "sports": [
+                {
+                    "id": 3,
+                    "name": "ATV",
+                    "startDate": "2021-01-01",
+                    "endDate": "2022-01-01",
+                    "avgCostPerDay": 200.0
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "locationName": "Bunloc",
+            "townName": "Sacele",
+            "sports": [
+                {
+                    "id": 4,
+                    "name": "DOWNHILL",
+                    "startDate": "2021-04-01",
+                    "endDate": "2021-11-01",
+                    "avgCostPerDay": 20.0
+                }
+            ]
+        }
+    ]
+    ```
+
+12. Searching for locations based on 2 or more sports, a period and sorting descending by avg price (ascending also possible):
+    ```    
+    (GET) /api/locations/search?sports=SKI,SNOWBOARDING&from=2022-01-10&to=2022-01-15&sort=DESC
+    ```
+    Response:
+    ```
+    [
+        {
+            "id": 3,
+            "locationName": "Angertal",
+            "townName": "Bad Hofgastein",
+            "sports": [
+                {
+                    "id": 6,
+                    "name": "SKI",
+                    "startDate": "2021-12-19",
+                    "endDate": "2022-04-02",
+                    "avgCostPerDay": 320.0
+                },
+                {
+                    "id": 7,
+                    "name": "SNOWBOARDING",
+                    "startDate": "2021-12-19",
+                    "endDate": "2022-04-02",
+                    "avgCostPerDay": 290.0
+                }
+            ]
+        },
+        {
+            "id": 1,
+            "locationName": "Cabana Susai",
+            "townName": "Predeal",
+            "sports": [
+                {
+                    "id": 1,
+                    "name": "SKI",
+                    "startDate": "2021-12-01",
+                    "endDate": "2022-03-01",
+                    "avgCostPerDay": 180.0
+                },
+                {
+                    "id": 5,
+                    "name": "SNOWBOARDING",
+                    "startDate": "2021-12-01",
+                    "endDate": "2022-03-01",
+                    "avgCostPerDay": 160.0
+                }
+            ]
+        }
+    ]
+    ```

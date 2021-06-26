@@ -17,7 +17,7 @@ public class SportRestController {
 
     private final SportServiceImpl sportService;
 
-    @GetMapping("/locations/{locationId/sports/{id}")
+    @GetMapping("/locations/{locationId}/sports/{id}")
     @ResponseStatus(HttpStatus.OK)
     public SportDTO getSportByID(@PathVariable Long id) {
         return sportService.findById(id);

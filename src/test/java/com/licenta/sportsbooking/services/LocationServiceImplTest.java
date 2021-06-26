@@ -94,8 +94,6 @@ class LocationServiceImplTest {
         //when
         service.deleteById(idToDelete);
 
-        //no 'when' because method has void return type
-
         //then
         assertThrows(NotFoundException.class, () -> {
             service.findById(idToDelete);

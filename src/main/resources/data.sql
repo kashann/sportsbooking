@@ -5,3 +5,6 @@ INSERT INTO sport (name, start_date, end_date, avg_cost_per_day) VALUES ('DOWNHI
 INSERT INTO sport (name, start_date, end_date, avg_cost_per_day) VALUES ('SNOWBOARDING', '2021-12-01', '2022-03-01', 160);
 INSERT INTO sport (name, start_date, end_date, avg_cost_per_day) VALUES ('SKI', '2021-12-19', '2022-04-02', 320);
 INSERT INTO sport (name, start_date, end_date, avg_cost_per_day) VALUES ('SNOWBOARDING', '2021-12-19', '2022-04-02', 290);
+INSERT INTO sport (name, start_date, end_date, avg_cost_per_day) VALUES ('SKYDIVING', '2021-04-01', '2022-10-31', 850);
+INSERT INTO sport (name, start_date, end_date, avg_cost_per_day) VALUES ('PARAGLIDING', '2021-04-01', '2022-10-31', 380);
+INSERT INTO sport (name, start_date, end_date, avg_cost_per_day) VALUES ('KITEBOARDING', '2021-06-01', '2022-09-15', 250);

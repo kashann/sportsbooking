@@ -1,5 +1,6 @@
 package com.licenta.sportsbooking.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -29,6 +30,7 @@ public class SportDTO implements Comparable<SportDTO> {
     @NotNull
     private Double avgCostPerDay;
 
+    @JsonIgnore
     public boolean isNew() {
         return this.id == null;
     }

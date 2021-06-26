@@ -20,8 +20,6 @@ public class LocationBootstrap implements ApplicationListener<ContextRefreshedEv
 
     private final LocationRepository locationRepository;
     private final SportRepository sportRepository;
-    private final TownRepository townRepository;
-    private final RegionRepository regionRepository;
     private final CountryRepository countryRepository;
 
     @Override
@@ -63,6 +61,18 @@ public class LocationBootstrap implements ApplicationListener<ContextRefreshedEv
         if (auSnowboardingOptional.isEmpty()) {
             throw new RuntimeException("Expected Sport not found!");
         }
+        Optional<Sport> tntSkydivingOptional = sportRepository.findById(8L);
+        if (tntSkydivingOptional.isEmpty()) {
+            throw new RuntimeException("Expected Sport not found!");
+        }
+        Optional<Sport> tntParaglidingOptional = sportRepository.findById(9L);
+        if (tntParaglidingOptional.isEmpty()) {
+            throw new RuntimeException("Expected Sport not found!");
+        }
+        Optional<Sport> kiteboardingOptional = sportRepository.findById(10L);
+        if (kiteboardingOptional.isEmpty()) {
+            throw new RuntimeException("Expected Sport not found!");
+        }
 
         Sport ski = skiOptional.get();
         Sport paragliding = paraglidingOptional.get();
@@ -71,31 +81,42 @@ public class LocationBootstrap implements ApplicationListener<ContextRefreshedEv
         Sport snowboarding = snowboardingOptional.get();
         Sport auSki = auSkiOptional.get();
         Sport auSnowboarding = auSnowboardingOptional.get();
+        Sport tntSkydiving = tntSkydivingOptional.get();
+        Sport tntParagliding = tntParaglidingOptional.get();
+        Sport kiteboarding = kiteboardingOptional.get();
 
         Country romania = new Country("Romania");
         Country austria = new Country("Austria");
 
         Region brasov = new Region("Brasov");
+        Region constanta = new Region("Constanta");
+        Region ilfov = new Region("Ilfov");
         Region salzburg = new Region("Salzburg");
 
         Town predeal = new Town("Predeal");
+        Town mamaia = new Town("Mamaia");
+        Town clinceni = new Town("Clinceni");
         Town sacele = new Town("Sacele");
         Town badhofgastein = new Town("Bad Hofgastein");
 
         brasov.setCountry(romania);
+        constanta.setCountry(romania);
+        mamaia.setRegion(constanta);
+        ilfov.setCountry(romania);
+        clinceni.setRegion(ilfov);
         predeal.setRegion(brasov);
         sacele.setRegion(brasov);
 
         salzburg.setCountry(austria);
         badhofgastein.setRegion(salzburg);
 
-        Location slope = new Location();
-        slope.setName("Predeal slope");
-        slope.setTown(predeal);
-        ski.setLocation(slope);
-        atv.setLocation(slope);
-        snowboarding.setLocation(slope);
-        locations.add(slope);
+        Location susai = new Location();
+        susai.setName("Cabana Susai");
+        susai.setTown(predeal);
+        ski.setLocation(susai);
+        atv.setLocation(susai);
+        snowboarding.setLocation(susai);
+        locations.add(susai);
 
         Location bunloc = new Location();
         bunloc.setName("Bunloc");
@@ -110,6 +131,19 @@ public class LocationBootstrap implements ApplicationListener<ContextRefreshedEv
         auSki.setLocation(angertal);
         auSnowboarding.setLocation(angertal);
         locations.add(angertal);
+
+        Location tntBrothers = new Location();
+        tntBrothers.setName("TNT Brothers Skydiving");
+        tntBrothers.setTown(clinceni);
+        tntSkydiving.setLocation(tntBrothers);
+        tntParagliding.setLocation(tntBrothers);
+        locations.add(tntBrothers);
+
+        Location blueBeach = new Location();
+        blueBeach.setName("Blue Beach");
+        blueBeach.setTown(mamaia);
+        kiteboarding.setLocation(blueBeach);
+        locations.add(blueBeach);
 
         countries.add(romania);
         countries.add(austria);

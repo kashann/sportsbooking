@@ -1,8 +1,7 @@
 package com.licenta.sportsbooking.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -22,6 +21,7 @@ public class LocationDTO {
     private TownDTO town;
     private List<SportDTO> sports = new ArrayList<>();
 
+    @JsonIgnore
     public boolean isNew() {
         return this.id == null;
     }
